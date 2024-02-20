@@ -1,0 +1,23 @@
+Inserted 1 readings 
+================================
+
+select query executed at 2024-02-19 15:40:38
+Active device ids are : 1201240085
+Reading data for meter id 1201240085
+saving data to database
+Inserted 1 readings 
+================================
+
+================================
+
+================================
+
+select query executed at 2024-02-19 15:40:38
+regenerating token after 84.88246061666668 minutes
+delete query executed
+Inserted 1 token details
+Active device ids are : 1201240085
+Reading data for meter id 1201240085
+saving data to database
+Inserted 1 readings 
+aaa
