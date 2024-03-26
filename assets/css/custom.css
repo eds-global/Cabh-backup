@@ -1,0 +1,8 @@
+.navbar-nav li.active a{
+    color:black;
+}
+
+.navbar-nav li a.nav-link{
+    padding-right: 10px;
+    padding-left: 10px;
+}

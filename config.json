@@ -1,0 +1,8 @@
+{
+    "Logo":"/logos/EDSlogo.png",
+    "Title":"Edsglobal",
+    "Favicon":"/logos/favicon.ico",
+    "api_host":"http://localhost:8080",
+    "server_host": "http://localhost:8083",
+    "url" : "http://localhost:8000"
+}
