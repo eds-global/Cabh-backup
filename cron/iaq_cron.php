@@ -133,30 +133,48 @@ function storeToken2DB(){
         if ($minutesDifference > 50){
             logMsg("Regenerating token after " . $minutesDifference . " minutes");
 
-            #delete existing tokens
-            $delete_query = " Delete from token_details ";
-            // Execute the query
-            if ($conn->query($delete_query) === TRUE)
-             {
-                logMsg ("Token Record deleted successfully");
-                #regenerate new token
-                $new_token = (getRefreshToken($token["refreshToken"]));
-                //echo "...........\n";
-                //print_r($new_token);
-                $idToken = $new_token->idToken;
+            $new_token = (getRefreshToken($token["refreshToken"]));
+            //echo "...........\n";
+            //print_r($new_token);
+            $idToken = $new_token->idToken;
+            #save new generated token to database
+            $query1 = "UPDATE token_details set id_token =  '" . $new_token->idToken . "', refresh_token = '" . $new_token->refreshToken . "', datetime = '" . $current_dt->format('Y-m-d H:i:s') ."'";
                 
-                #save new generated token to database
-                $query1 = " INSERT INTO token_details  values( '" . $new_token->idToken . "', '" . $new_token->refreshToken . "', '" . $current_dt->format('Y-m-d H:i:s') ."')";
-                if ($conn->query($query1) === TRUE) {
-                    logMsg("Inserted new token details")  ;
+            //$query1 = " INSERT INTO token_details  values( '" . $new_token->idToken . "', '" . $new_token->refreshToken . "', '" . $current_dt->format('Y-m-d H:i:s') ."')";
+            if ($conn->query($query1) === TRUE) {
+                logMsg("New token details updated")  ;
 
-                }
-                else {
-                    logMsg ("Error: " . $sql . "<br>" . $conn->error);
-                }
-            } else {
-                logMsg ("Error deleting record: " . $conn->error);
             }
+            else {
+                logMsg ("Error: " . $sql . "<br>" . $conn->error);
+            }
+
+            // #delete existing tokens
+            // $delete_query = " Delete from token_details ";
+            // // Execute the query
+            // if ($conn->query($delete_query) === TRUE)
+            //  {
+            //     logMsg ("Token Record deleted successfully");
+            //     #regenerate new token
+            //     $new_token = (getRefreshToken($token["refreshToken"]));
+            //     //echo "...........\n";
+            //     //print_r($new_token);
+            //     $idToken = $new_token->idToken;
+                
+            //     #save new generated token to database
+            //     $query1 = "UPDATE token_details set id_token =  '" . $new_token->idToken . "', refresh_token = '" . $new_token->refreshToken . "', datetime = '" . $current_dt->format('Y-m-d H:i:s') ."'";
+                
+            //     //$query1 = " INSERT INTO token_details  values( '" . $new_token->idToken . "', '" . $new_token->refreshToken . "', '" . $current_dt->format('Y-m-d H:i:s') ."')";
+            //     if ($conn->query($query1) === TRUE) {
+            //         logMsg("New token details updated")  ;
+
+            //     }
+            //     else {
+            //         logMsg ("Error: " . $sql . "<br>" . $conn->error);
+            //     }
+            // } else {
+            //     logMsg ("Error deleting record: " . $conn->error);
+            // }
 
         }
 
@@ -338,7 +356,7 @@ function saveData2DB($data){
 
 
 
-
+//working call
 
 $idToken = storeToken2DB();
 $devices = getActiveDeviceIDs();
@@ -348,9 +366,7 @@ $final_dt = formatData($data, $devices);
 saveData2DB($final_dt);
 
 
-
-
-
+//print_r(getToken());
 
 
 ?>
