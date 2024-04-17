@@ -43,7 +43,7 @@
         $query = generateInsertQuery("last_data", $input);
         try{  
             if ($conn->query($query) === TRUE) {
-                $last_id = $conn->insert_id;
+                $last_id = $conn->insert_id;  //id is not showing correct
                 return json_encode ( [ 'ApiResponse' => 'Success', 'ID' => $last_id, 'Message' => "New record created successfully" ] );
               } else {
                 return json_encode ( [ 'ApiResponse' => 'Fail', 'Message' => "Error: ". $conn->error ] );
@@ -65,7 +65,7 @@
         }
         $conn = db_connect();
          // parameter - $table, $condition=array(), $columns=array()
-        $query = generateUpdateQuery("last_data", $input);
+        $query = generateUpdateQuery("last_data", $input,"deviceID");
         
         try{  
             if ($conn->query($query) === TRUE) {
