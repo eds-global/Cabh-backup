@@ -65,7 +65,7 @@
         }
         $conn = db_connect();
          // parameter - $table, $condition=array(), $columns=array()
-        $query = generateUpdateQuery("device_details", $input);
+        $query = generateUpdateQuery("device_details", $input, "deviceID" );
         
         try{  
             if ($conn->query($query) === TRUE) {

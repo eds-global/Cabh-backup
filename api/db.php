@@ -35,19 +35,19 @@
         return $query;
     }
     //not working
-    function generateUpdateQuery( $table, $values,$conditionCol, $conditionValue){
+    function generateUpdateQuery( $table, $values,$conditionCol){
         $update_str = "";
         $update_arr = array();
         $query = "update " . $table . " set " ;
 
-        //$id = $values["id"];
-        //unset($values["id"]);
+        $id = $values[$conditionCol];
+        unset($values[$conditionCol]);
         foreach($values as $col=> $value){
             array_push($update_arr, $col . " = " . $value);
         }
         $update_str = implode( ", ", $update_arr);
         $query .=  $update_str;
-        $query .=  " where ". $conditionCol ." = " . $conditionValue;
+        $query .=  " where ". $conditionCol ." = " . $id ."";
         return $query;
     }
 

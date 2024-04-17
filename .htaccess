@@ -1,6 +1,6 @@
 IndexIgnore * # prevent directory listing
 
 RewriteEngine on
-RewriteBase /api/
+RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ /api/index.php [L,QSA]
+RewriteRule ^(.*)$ /index.php [L,QSA]
