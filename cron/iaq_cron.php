@@ -336,8 +336,47 @@ function saveData2DB($data){
     logMsg("saving data to database");
     $values = array();
     foreach ($data as $dt){
-        $val = " ('" . $dt['deviceID'] . "', '" . $dt['datetime'] . "', '" . $dt['pm25'] . "', '" . $dt['pm10'] . "', '" . $dt['aqi'] . "', '" . $dt['co2']  . "', '" . $dt['voc'] . "', '" . $dt['temperature'] . "', '" . $dt['humidity'] . "', '" . $dt['battery'] . "', '" . $dt["viral_index"] . "')" ;
-        array_push($values,$val);
+        $lastdata_select_query = " Select * from last_data where  deviceID = '" . $dt['deviceID'] . "'";
+        try{        
+            $result = $conn->query($lastdata_select_query);
+            //if data for that device exits
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $deviceID = $row['deviceID'];
+                $last_dt = $row['datetime'];
+                
+                //check if data from meter is new data then add to insert value array otherwise leave that data
+                if($dt['datetime'] > $last_dt ){
+                    $val = " ('" . $dt['deviceID'] . "', '" . $dt['datetime'] . "', '" . $dt['pm25'] . "', '" . $dt['pm10'] . "', '" . $dt['aqi'] . "', '" . $dt['co2']  . "', '" . $dt['voc'] . "', '" . $dt['temperature'] . "', '" . $dt['humidity'] . "', '" . $dt['battery'] . "', '" . $dt["viral_index"] . "')" ;
+                    array_push($values,$val);
+                    //if meter send new data update last_data table
+                    $last_data_update_query = "update last_data set datetime =  '" . $dt['datetime'] . "' where deviceID = '" . $deviceID. "'";
+                    if ($conn->query($last_data_update_query) === TRUE) {
+                        logMsg("last data updated for " . $deviceID . " meter ")  ;
+                
+                    }
+                    else {
+                        logMsg ("Error: " . $last_data_update_query . "<br>" . $conn->error);
+                    }
+                }
+            } else {
+                $val = " ('" . $dt['deviceID'] . "', '" . $dt['datetime'] . "', '" . $dt['pm25'] . "', '" . $dt['pm10'] . "', '" . $dt['aqi'] . "', '" . $dt['co2']  . "', '" . $dt['voc'] . "', '" . $dt['temperature'] . "', '" . $dt['humidity'] . "', '" . $dt['battery'] . "', '" . $dt["viral_index"] . "')" ;
+                array_push($values,$val);
+
+                $last_data_insert_query = "Insert into last_data (deviceID, datetime) values ('" . $dt['deviceID'] . "', '" .  $dt['datetime'] . "')";
+                if ($conn->query($last_data_insert_query) === TRUE) {
+                    logMsg("last data added for " .  $dt['deviceID'] . " meter ")  ;
+            
+                }
+                else {
+                    logMsg ("Error: " . $last_data_insert_query . "<br>" . $conn->error);
+                }
+            }
+
+        }
+        catch(Exception $e){
+            logMsg ("Error: " . $e.getMessage());
+        }        
     }
 
     $insert_query = " INSERT INTO reading_db (deviceID, datetime, pm25, pm10, aqi, co2, voc, temp, humidity, battery, viral_index) values ";
