@@ -353,6 +353,95 @@ function saveData2DB($data){
     }
 }
         
+#=============================CPCB_Data functions==========================
+
+#===============get device IDs function =============#
+#this function returns all active device IDs
+#=================================================#
+function getActiveCPCBDeviceIDs(){
+    $conn = getConnection();
+    $select_query = " Select deviceID from cpcb_monitors where active = 1 ";
+    $result = $conn->query($select_query);
+    $devices = array();
+    if ($result) {
+        while($row = $result->fetch_assoc()){
+            array_push($devices,$row['deviceID']);
+        }
+    }
+    $conn->close();
+    /* if (count($devices)>0) {
+        return  json_encode ( [ 'Response' => 'Success', 'RowCount' => count($devices), 'Data' => $devices ] );
+    } else {
+        return json_encode ( [ 'Response' => 'Success', 'RowCount' => $result->num_rows, 'Message' => "No records found" ] );;
+    }  */             
+    return $devices;
+
+}
+
+#===============save data function =============#
+#this function save the latest data for all devices to database
+#=================================================#
+function saveCPCBData2DB($data){
+    $conn = getConnection();
+    logMsg("saving cpcb data to database");
+    $values = array();
+    foreach ($data as $dt){
+        //check in last data table if data for that record exist
+        $lastdata_select_query = " Select * from last_data where  deviceID = '" . $dt['deviceID'] . "'";
+        try{        
+            $result = $conn->query($lastdata_select_query);
+            //if data for that device exits
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $deviceID = $row['deviceID'];
+                $last_dt = $row['datetime'];
+                
+                //check if data from meter is new data then add to insert value array otherwise leave that data
+                if($dt['datetime'] > $last_dt ){
+                    $val = " ('" . $dt['deviceID'] . "', '" . $dt['datetime'] . "', '" . $dt['pm25'] . "', '" . $dt['pm10'] . "', '" . $dt['aqi'] . "', '" . $dt['co2']  . "', '" . $dt['voc'] . "', '" . $dt['temperature'] . "', '" . $dt['humidity'] . "', '" . $dt['battery'] . "', '" . $dt["viral_index"] . "')" ;
+                    array_push($values,$val);
+                    //if meter send new data update last_data table
+                    $last_data_update_query = "update last_data set datetime =  '" . $dt['datetime'] . "' where deviceID = '" . $deviceID. "'";
+                    if ($conn->query($last_data_update_query) === TRUE) {
+                        logMsg("last data updated for " . $deviceID . " meter ")  ;
+                
+                    }
+                    else {
+                        logMsg ("Error: " . $last_data_update_query . "<br>" . $conn->error);
+                    }
+                }
+            } else {
+                $val = " ('" . $dt['deviceID'] . "', '" . $dt['datetime'] . "', '" . $dt['pm25'] . "', '" . $dt['pm10'] . "', '" . $dt['aqi'] . "', '" . $dt['co2']  . "', '" . $dt['voc'] . "', '" . $dt['temperature'] . "', '" . $dt['humidity'] . "', '" . $dt['battery'] . "', '" . $dt["viral_index"] . "')" ;
+                array_push($values,$val);
+
+                $last_data_insert_query = "Insert into last_data (deviceID, datetime) values ('" . $dt['deviceID'] . "', '" .  $dt['datetime'] . "')";
+                if ($conn->query($last_data_insert_query) === TRUE) {
+                    logMsg("last data added for " .  $dt['deviceID'] . " meter ")  ;
+            
+                }
+                else {
+                    logMsg ("Error: " . $last_data_insert_query . "<br>" . $conn->error);
+                }
+            }
+
+        }
+        catch(Exception $e){
+            logMsg ("Error: " . $e.getMessage());
+        }        
+    }
+
+    $insert_query = " INSERT INTO cpcb_data (deviceID, datetime, pm25, pm10, aqi, co2, voc, temp, humidity, battery, viral_index) values ";
+    $value_str = join(",", $values);
+    $insert_query .= $value_str;
+
+    if ($conn->query($insert_query) === TRUE) {
+        logMsg("CPCB meter data inserted to database")  ;
+
+    }
+    else {
+        logMsg ("Error: " . $insert_query . "<br>" . $conn->error);
+    }
+}
 
 
 
@@ -364,6 +453,13 @@ $data = getLatestData($devices, $idToken);
 $final_dt = formatData($data, $devices);
 //print_r($final_dt);
 saveData2DB($final_dt);
+
+//cpcb_data
+$cpcb_devices = getActiveCPCBDeviceIDs();
+$cpcb_data = getLatestData($cpcb_devices, $idToken);
+$final_cpcb_dt = formatData($cpcb_data, $cpcb_devices);
+//print_r($final_dt);
+saveCPCBData2DB($final_cpcb_dt);
 
 
 //print_r(getToken());
