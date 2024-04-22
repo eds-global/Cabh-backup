@@ -1,6 +1,6 @@
 <?php
-
 function setMenu(){
+    
     $publicmenu = array(
         [
             'title' => 'Home',

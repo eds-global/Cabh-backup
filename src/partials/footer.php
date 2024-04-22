@@ -42,6 +42,28 @@
     <!--Local Stuff-->
     <script>
         jQuery(document).ready(function($) {
+            active_nav = "<?php echo $_SESSION['config']->Request_URI ?>";
+            //alert(active_nav);
+            if (active_nav == "/home" || active_nav == "/"){
+                $("#nav_home").addClass("active"); 
+            }
+            
+            else if (active_nav == "/breathin" ){
+                $("#nav_breath").addClass("active"); 
+            }
+            else if (active_nav == "/about-cabh" ){
+                $("#nav_about").addClass("active"); 
+            }
+            else if (active_nav == "/dialog" ){
+                $("#nav_dialog").addClass("active"); 
+            }
+            else if (active_nav == "/login" ){
+                $("#nav_login").addClass("active"); 
+            }
+             
+            
+
+
             "use strict";
 
             // Pie chart flotPie1

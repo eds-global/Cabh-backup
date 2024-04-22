@@ -2,6 +2,7 @@
     ini_set('session.gc_maxlifetime', 3600);
     session_set_cookie_params(3600);
     if (session_id()) {
+        $_SESSION['config']->user = "public";
         session_destroy();
     }
     session_start();
@@ -9,6 +10,8 @@
     $_SESSION['config'] = json_decode(file_get_contents('config.json'));
     $request = $_SERVER['REQUEST_URI'];
     $_SESSION['config']->Request_URI = $request;
+    
+    
     $uri = explode('/',$request);
     
     $uri = array_filter($uri);

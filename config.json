@@ -3,6 +3,7 @@
     "Title":"Edsglobal",
     "Favicon":"/logos/favicon.ico",
     "api_host":"http://localhost:8080",
-    "server_host": "http://localhost:8083",
-    "url" : "http://localhost:8000"
+    "server_host": "http://localhost:82",
+    "url" : "http://localhost:8000",
+    "user": "public"
 }
