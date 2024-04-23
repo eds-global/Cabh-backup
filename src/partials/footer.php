@@ -47,8 +47,10 @@
             if (active_nav == "/home" || active_nav == "/"){
                 $("#nav_home").addClass("active"); 
             }
-            
-            else if (active_nav == "/breathin" ){
+            else if (active_nav == "/dashboard" ){
+                $("#nav_dashboard").addClass("active"); 
+            }
+            else if (active_nav == "/breathein" ){
                 $("#nav_breath").addClass("active"); 
             }
             else if (active_nav == "/about-cabh" ){

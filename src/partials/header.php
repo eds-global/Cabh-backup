@@ -89,10 +89,13 @@
                        <ul class="nav navbar-nav ml-auto" style="flex-direction: row;">
                         
                         <li class="nav-item ">
-                            <a href="/home" class="nav-link" id="nav_home">Dashboard</a>
+                            <a href="/home" class="nav-link" id="nav_home">Home</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="/dashboard" class="nav-link" id="nav_dashboard">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/breathin" class="nav-link" id="nav_breath">Breath-in</a>
+                            <a href="/breathein" class="nav-link" id="nav_breath">Breathe-in</a>
                         </li>
                         <li class="nav-item">
                             <a href="/about-cabh" class="nav-link" id="nav_about">About <b>CABH</b></a>
