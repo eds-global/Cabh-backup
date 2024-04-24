@@ -10,3 +10,15 @@
 .carousel_col{
     margin: 0 auto;
 }
+
+.bg-green{
+    background-color: #485E4E;
+    color: white;
+}
+footer.site-footer .footer-inner{
+    color:white;
+}
+
+footer.site-footer .footer-inner a {
+    color: white;
+}

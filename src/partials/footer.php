@@ -1,11 +1,17 @@
 <footer class="site-footer">
-            <div class="footer-inner bg-white">
+            <div class="footer-inner bg-green">
                 <div class="row">
                     <div class="col-sm-6">
-                        Copyright &copy; 2018 Ela Admin
+                        Developed by Environmental Design Solutions Private Limites    
+                        <span style="color:#485E4E">Copyright &copy; 2018 Ela Admin</span>
                     </div>
                     <div class="col-sm-6 text-right">
-                        Designed by <a href="https://colorlib.com">Colorlib</a>
+                    <span style="color:#485E4E">Designed by <a href="https://colorlib.com" style="color:#485E4E">>Colorlib</a></span>
+                    
+                        <a href="">Disclaimer </a>
+                    <a href="#" class="fa fa-facebook" style="padding:5px"></a>
+                    <a href="#" class="fa fa-twitter" style="padding:5px"></a>
+                    <a href="#" class="fa fa-linkedin" style="padding:5px"></a>
                     </div>
                 </div>
             </div>
