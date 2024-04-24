@@ -1,6 +1,4 @@
-.navbar-nav li.active a{
-    color:black;
-}
+
 
 .navbar-nav li a.nav-link{
     padding-right: 10px;
@@ -12,7 +10,7 @@
 }
 
 .bg-green{
-    background-color: #485E4E;
+    background-color: #485E4E!important;
     color: white;
 }
 footer.site-footer .footer-inner{
@@ -21,4 +19,33 @@ footer.site-footer .footer-inner{
 
 footer.site-footer .footer-inner a {
     color: white;
+}
+
+
+.right-panel{
+    margin-top: 127px;
+}
+.right-panel header.header{
+    height: 72px;
+}
+#header1.header{
+    margin-top: 70px;
+    height: 55px;
+}
+.right-panel .top-left{
+    width: 165px;
+}
+.right-panel .navbar-brand {
+    width: 150px;
+}
+.header-left{
+    display: flex;
+}
+.navbar-nav li a.nav-link {
+    color: white;
+}
+.navbar-nav li a.active{
+    font-weight: 400;
+    color:yellow;
+    
 }
