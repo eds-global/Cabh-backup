@@ -27,20 +27,17 @@
                 </div>
 
                 <!-- jwedew 
-                <div class="talk-bubble tri-right round right-in" style="margin: 40px; display: inline-block; position: relative; width: 200px; height: auto; background-color: lightyellow;">
-    <div class="talktext" style="padding: 1em; text-align: left; line-height: 1.5em;">
-    
-        About CABH<br>
-        Standard text and branding.
-        High contrast color theme for branding to stand out.
-    </div>
-    <div class="tri-right right-in" style="position: absolute; width: 0; height: 0; left: auto; right: -40px; top: 30px; bottom: auto; border: 20px solid; border-color: #666 transparent transparent #666;"></div>
-    <div class="tri-right right-in" style="position: absolute; width: 0; height: 0; left: auto; right: -20px; top: 38px; bottom: auto; border: 12px solid; border-color: lightyellow transparent transparent lightyellow;"></div>
-</div>
-  -->
-
-
-
+            <div class="talk-bubble tri-right round right-in" style="margin: 40px; display: inline-block; position: relative; width: 200px; height: auto; background-color: lightyellow;">
+                <div class="talktext" style="padding: 1em; text-align: left; line-height: 1.5em;">
+                
+                    About CABH<br>
+                    Standard text and branding.
+                    High contrast color theme for branding to stand out.
+                </div>
+                <div class="tri-right right-in" style="position: absolute; width: 0; height: 0; left: auto; right: -40px; top: 30px; bottom: auto; border: 20px solid; border-color: #666 transparent transparent #666;"></div>
+                <div class="tri-right right-in" style="position: absolute; width: 0; height: 0; left: auto; right: -20px; top: 38px; bottom: auto; border: 12px solid; border-color: lightyellow transparent transparent lightyellow;"></div>
+            </div>
+            -->
 
             </div>
             
