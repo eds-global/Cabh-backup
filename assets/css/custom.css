@@ -49,3 +49,33 @@ footer.site-footer .footer-inner a {
     color:yellow;
     
 }
+
+.card{
+    margin-bottom: 20px;
+}
+.col-lg-6 .col-lg-4{
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    #header-row {
+      visibility: visible;
+      
+    }
+    #header {
+        visibility: hidden;
+        display: none;
+        
+      }
+  }
+  @media screen and (min-width: 768px) {
+    #header-row {
+      visibility: hidden;
+      
+    }
+    #header {
+        visibility: visible;
+        
+      }
+  }

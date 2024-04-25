@@ -28,7 +28,7 @@
                         <div class="card">
                             
                             <div class="card-body" >
-                                <div id="map" style="position: relative; overflow:hidden; width: 100%; height:400px "></div>
+                                <div id="map" style="position: relative; overflow:hidden; width: 100%; height:380px "></div>
                             </div>
                         </div>
                         <!-- /# card -->

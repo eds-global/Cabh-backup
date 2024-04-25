@@ -74,7 +74,7 @@
     
     <!-- Right Panel -->
     <div id="right-panel" class="right-panel" style="margin-left:0!important">
-        <header id="header" class="header">
+        <header id="header"  class="header">
             <div class="top-left">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="./"><img src="<?php echo $_SESSION['config']->server_host?>/images/usaid.png" alt="Logo"></a>
@@ -100,6 +100,21 @@
                 </div>
             </div>
         </header>
+        <!-- for mobile -->
+        <header id="header-row" class="header hidden">
+            <div class="row">
+                <div class="col-lg-12">
+                    <img src="<?php echo $_SESSION['config']->server_host?>/images/usaid.png" alt="Logo"  style="max-width:30%; margin-right:5px; float:left">
+                    <img src="<?php echo $_SESSION['config']->server_host?>/images/EDSlogo.png" alt="Logo" style="max-width:20%; margin-right:5px; float:left">
+                    <img src="<?php echo $_SESSION['config']->server_host?>/images/ceew.png" alt="Logo" style="max-width:20%; margin-right:5px; float:left">
+              
+                </div>
+               
+            </div>
+            
+            
+        </header>
+        <!-- mobile row finish -->
         <header id="header1" class="header bg-green">
             <div class="top-left">
                 <div class="navbar-header">
@@ -107,11 +122,12 @@
                 </div>
             </div>
             <div class="top-right">
-                <div class="header-menu">
+                <div class="header-menu ">
                     <div class="header-left">
                        <?php// echo setMenu();?>
+                       
 
-                       <ul class="nav navbar-nav ml-auto" style="flex-direction: row;">
+                       <ul class="nav navbar-nav ml-auto " style="flex-direction: row;">
                         
                         <li class="nav-item ">
                             <a href="/home" class="nav-link" id="nav_home">Home</a>
