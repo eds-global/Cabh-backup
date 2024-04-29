@@ -44,6 +44,27 @@
         .last-partners-section .partner-description {
             margin-bottom: 20px;
         }
+
+        #grey {
+            background-color: #f3f3f3; /* Light grey background color */
+            padding: 0px; /* Add padding to the div */
+            margin-left: 90px; /* Margin on the left side */
+            margin-right: 140px; /* Margin on the right side */
+        }
+
+        #grey .about-content {
+            padding: 2px; /* Add padding to the content inside the div */
+        }
+
+        #grey p {
+            color: black; 
+        }
+
+        #grey img {
+            max-width: 56%; /* Set maximum width for images */
+            height: 50px; /* Maintain aspect ratio */
+        }
+
     </style>
 
 <!-- Content -->
@@ -56,23 +77,26 @@
                         <h4 class="heading-about"> ABOUT CABH </h4>
                     </div>
                 </div>
-                <div class="row" style="margin-top: 20px;">
-                    <div class="col-lg-6 about-bg">
-                        <div class="about-content">
-                            <p style="color: black; margin-left:270px; background-color: #f2f2f2;">
-                                Cleaner Air and Better Health is a five-year project supported by the United States Agency for 
-                                International Development. It aims to strengthen air pollution mitigation and reduce exposure to air 
-                                pollution in India by establishing evidence-based models for better air quality management.<br><br>
-                                The project is being implemented by a consortium led by the Council on Energy, Environment,
-                                and Water and includes ASAR Social Impact Advisors, Environmental Design Solutions Defence Firm, and 
-                                Vital Strategies Legal.
-                            </p>
+                <!-- <div style="background-color: #f2f2f2; padding: 18px;"> -->
+                    <div class="row" id="grey">
+                        <div class="col-lg-6 about-bg" style="margin-top: 20px;">
+                            <div class="about-content">
+                                <p style="color: black; margin-left: 220px;">
+                                    Cleaner Air and Better Health is a five-year project supported by the United States Agency for
+                                    International Development. It aims to strengthen air pollution mitigation and reduce exposure to
+                                    air pollution in India by establishing evidence-based models for better air quality management.<br><br>
+                                    The project is being implemented by a consortium led by the Council on Energy, Environment, and Water 
+                                    and includes ASAR Social Impact Advisors, Environmental Design Solutions Defence Firm, and Vital Strategies 
+                                    Legal.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-4 text-center align-self-center">
+                            <img src="../images/cabh_about.png" alt="CABH Logo" style="max-width: 116%; height: auto;">
                         </div>
                     </div>
-                    <div class="col-lg-6 text-center align-self-center">
-                        <img src="../images/cabh_about.png" alt="CABH Logo" style="max-width: 46%; height: auto; margin-right:80px;">
-                    </div>
-                </div>
+                <!-- </div> -->
 
                 <!----------------------------------------- Partners Section --------------------------------------->
                 <div class="row partners-section">
@@ -128,47 +152,48 @@
                     <div class="col-lg-12 text-center">
                         <h4 class="heading-about"> CONTACT </h4>
                     </div>
-                    <div class="col-lg-4 text-center" style="margin-top: 20px;">
-                        <div class="partner-description">
-                            <p style="color: black; text-align: left; margin-left: 90px; background-color: #f2f2f2;">
-                                <b>Lakshmy Narayankutty</b><br>
-                                Program Manager- Breathein,<br>
-                                Environmental Design Solutions<br>
-                                Private Limited<br>
-                                Phone: 91-11-056-8633<br>
-                                Email: Lakshmy@edsglobal.com
-                            </p>
+                    <div class="row" style="background-color: #f2f2f2; margin-left:250px; margin-top:10px;">
+                        <div class="col-lg-4 text-center">
+                            <div class="partner-description">
+                                <p style="color: black; text-align: left; margin-left:20px;">
+                                    <b>Lakshmy Narayankutty</b><br>
+                                    Program Manager- Breathein,<br>
+                                    Environmental Design Solutions<br>
+                                    Private Limited<br>
+                                    Phone: 91-11-056-8633<br>
+                                    Email: Lakshmy@edsglobal.com
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <div class="partner-description">
+                                <p style="color: black; text-align: left;">
+                                    <b>Om Prakash Singh</b><br>
+                                    Chief of Party, Cleaner Air and<br>
+                                    Better Health Project<br>
+                                    Council on Energy, Environment and Water<br>
+                                    Phone: 91-11-073-3300<br>
+                                    Email: omprakash.singh@ceew.in
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <div class="partner-description">
+                                <p style="color: black; text-align: left;">
+                                    <b>Soumitri Das</b><br>
+                                    Project Management Specialist<br>
+                                    Environment United States Agency for<br>
+                                    International Development<br>
+                                    #USAID Phone: +91-11-219-8000<br>
+                                    Email: sodas@usaid.gov
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 text-center" style="margin-top: 20px;">
-                        <div class="partner-description">
-                            <p style="color: black; text-align: left; margin-left: 90px; background-color: #f2f2f2;">
-                                <b>Om Prakash Singh</b><br>
-                                Chief of Party, Cleaner Air and<br>
-                                Better Health Project<br>
-                                Council on Energy, Environment and Water<br>
-                                Phone: 91-11-073-3300<br>
-                                Email: omprakash.singh@ceew.in
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 text-center" style="margin-top: 20px;">
-                        <div class="partner-description">
-                            <p style="color: black; text-align: left; margin-left: 90px; background-color: #f2f2f2;">
-                                <b>Soumitri Das</b><br>
-                                Project Management Specialist<br>
-                                Environment United States Agency for<br>
-                                International Development<br>
-                                #USAID Phone: +91-11-219-8000<br>
-                                Email: sodas@usaid.gov
-                            </p>
-                        </div>
-                    </div>
-
                 </div>
 
                  <!------------------------------------- Starting a new row for the Legal section --------------------------------------->
-                 <div class="row">
+                 <div class="row" style="margin-top: 30px;">
                     <div class="col-lg-12 text-center">
                         <h4 class="heading-about"> LEGAL </h4>
                     </div>
