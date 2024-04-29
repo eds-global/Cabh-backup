@@ -49,7 +49,7 @@
             background-color: #f3f3f3; /* Light grey background color */
             padding: 0px; /* Add padding to the div */
             margin-left: 90px; /* Margin on the left side */
-            margin-right: 140px; /* Margin on the right side */
+            margin-right: 210px; /* Margin on the right side */
         }
 
         #grey .about-content {
@@ -81,7 +81,7 @@
                     <div class="row" id="grey">
                         <div class="col-lg-6 about-bg" style="margin-top: 20px;">
                             <div class="about-content">
-                                <p style="color: black; margin-left: 220px;">
+                                <p style="color: black; margin-left: 110px;">
                                     Cleaner Air and Better Health is a five-year project supported by the United States Agency for
                                     International Development. It aims to strengthen air pollution mitigation and reduce exposure to
                                     air pollution in India by establishing evidence-based models for better air quality management.<br><br>
@@ -92,8 +92,8 @@
                             </div>
                         </div>
                         <div class="col-lg-2"></div>
-                        <div class="col-lg-4 text-center align-self-center">
-                            <img src="../images/cabh_about.png" alt="CABH Logo" style="max-width: 116%; height: auto;">
+                        <div class="col-lg-3 text-center align-self-center">
+                            <img src="../images/cabh_about.png" alt="CABH Logo" style="max-width: 160%; height: auto;">
                         </div>
                     </div>
                 <!-- </div> -->
