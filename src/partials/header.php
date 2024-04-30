@@ -67,6 +67,12 @@
             color: black;
         }
 
+       
+
+        
+       
+       
+
     </style>
 </head>
 
@@ -103,10 +109,12 @@
         <!-- for mobile -->
         <header id="header-row" class="header hidden">
             <div class="row">
-                <div class="col-lg-12">
-                    <img src="<?php echo $_SESSION['config']->server_host?>/images/usaid.png" alt="Logo"  style="max-width:30%; margin-right:5px; float:left">
-                    <img src="<?php echo $_SESSION['config']->server_host?>/images/EDSlogo.png" alt="Logo" style="max-width:20%; margin-right:5px; float:left">
-                    <img src="<?php echo $_SESSION['config']->server_host?>/images/ceew.png" alt="Logo" style="max-width:20%; margin-right:5px; float:left">
+                <div class="col-lg-12" style="display:flex">
+                    <img src="<?php echo $_SESSION['config']->server_host?>/images/usaid.png" alt="Logo"  style="max-width:30%; margin-right:5px; float:left" class="text-left">
+                    <center>
+                    <img src="<?php echo $_SESSION['config']->server_host?>/images/EDSlogo.png" alt="Logo" style="max-width:40%; margin-right:auto; margin-left:25%; float:left" class="text-center">
+    </center>
+                    <img src="<?php echo $_SESSION['config']->server_host?>/images/ceew.png" alt="Logo" style="max-width:20%; margin-right:5px; float:right" class="text-right">
               
                 </div>
                
@@ -155,6 +163,8 @@
                         
                         ?>
                        </ul>
+
+                      
                         
 
                        
@@ -179,5 +189,90 @@
                 </div>
             </div>
         </header>
+        <header id="header1-mobile" class="header bg-green mobile-header-menu">
+            <div class="text-left" >
+                
+                <img src="<?php echo $_SESSION['config']->server_host?>/images/cabh-logo.png" style="width:40%">
+                        
+                
+                
+            </div>
+            <div class="text-right">
+                <Strong id="mobile-menu-btn">Menu</strong>
+            <ul class=" nav navbar-nav mobile-menu">
+                        
+                        <li class="nav-item ">
+                            <a href="/home" class="nav-link" id="nav_home">Home</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="/dashboard" class="nav-link" id="nav_dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/breathein" class="nav-link" id="nav_breath">Breathe-in</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/about-cabh" class="nav-link" id="nav_about">About <b>CABH</b></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/dialog" class="nav-link" id="nav_dialog">Dialogs</a>
+                        </li>
+                        <?php 
+                            if($_SESSION['config']->user == "public"){
+                                ?>
+                                <li class="nav-item">
+                                    <a href="/login" class="nav-link" id="nav_login">Login</a>
+                                </li>
+                                <?php
+                            }
+                        
+                        ?>
+                       </ul>
+            </div>
 
+            <!-- <div class="top-right">
+                <div class="header-menu ">
+                    <div class="header-left">
+                       
+                       
+
+                       <ul class="nav navbar-nav ml-auto " style="flex-direction: row;">
+                        
+                        <li class="nav-item ">
+                            <a href="/home" class="nav-link" id="nav_home">Home</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="/dashboard" class="nav-link" id="nav_dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/breathein" class="nav-link" id="nav_breath">Breathe-in</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/about-cabh" class="nav-link" id="nav_about">About <b>CABH</b></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/dialog" class="nav-link" id="nav_dialog">Dialogs</a>
+                        </li>
+                        <?php 
+                            if($_SESSION['config']->user == "public"){
+                                ?>
+                                <li class="nav-item">
+                                    <a href="/login" class="nav-link" id="nav_login">Login</a>
+                                </li>
+                                <?php
+                            }
+                        
+                        ?>
+                       </ul>
+
+                      
+                        
+
+                       
+                    </div>
+
+                    
+                </div>
+            </div> -->
+        </header>
+        
         
