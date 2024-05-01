@@ -121,7 +121,7 @@
                     </div>
                     <div class="col-lg-4 text-center" style="margin-top: 20px;">
                         <img class="partner-logo smaller" src="../images/asar.png" alt="ASAR Logo" style="width: 130px;">
-                        <div class="partner-description" style="margin-top: 20px;">
+                        <div class="partner-description" style="margin-top: 30px;">
                             <p style="color: black; margin-right:70px;">ASAR is known for its innovative approach to policy analysis. 
                                 They strive to make a meaningful impact in the region.
                             </p>
