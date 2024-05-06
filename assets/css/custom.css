@@ -135,3 +135,12 @@ footer.site-footer .footer-inner a {
     }
     
   }
+
+
+  footer.site-footer .footer-inner{
+    padding: 1.15em 1.125em;
+  }
+
+  .header-menu{
+    margin-top: 5px;
+  }

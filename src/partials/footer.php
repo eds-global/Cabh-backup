@@ -2,7 +2,7 @@
             <div class="footer-inner bg-green">
                 <div class="row">
                     <div class="col-sm-6">
-                        Developed by Environmental Design Solutions Private Limites    
+                        Developed by Environmental Design Solutions Private Limited    
                         <span style="color:#485E4E">Copyright &copy; 2018 Ela Admin</span>
                     </div>
                     <div class="col-sm-6 text-right">
