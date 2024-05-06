@@ -14,9 +14,9 @@ function logMsg($logMessage){
 
 
 function db_connect() {
-    $dbhost = "68.178.149.225";
-    $dbuser = "edsglobal";
-    $dbpass = "EdS!234";
+    $dbhost = "139.59.34.149"; //"68.178.149.225";
+    $dbuser = "neemdb"; //"edsglobal";
+    $dbpass = "(#&pxJ&p7JvhA7<B"; //"EdS!234";
     $db = "cabh_iaq_db"; 
     /*$dbhost = "localhost";
     $dbuser = "root";

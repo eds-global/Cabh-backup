@@ -11,6 +11,7 @@
             $end_limit = $data["end_row"];
             $start_date = $data["start_date"];
             $end_date = $data["end_date"];
+            $devices = $data["device_IDs"];
             
             foreach($data as $key => $value){
                 $condition[$key] = $value;
@@ -20,6 +21,7 @@
             unset($condition["end_row"]);  
             unset($condition["start_date"]);  
             unset($condition["end_date"]);  
+            unset($condition["device_IDs"]);
                    
         }
         $conn = db_connect();
@@ -41,6 +43,10 @@
             $query .= " datetime <= '" . $end_date . "'";
         }else if($start_date != null && $end_date == null){
             $query .= " datetime >= '" . $start_date . "'";
+        }
+
+        if($devices != null){
+            $query .= "and deviceID in (" . $devices . ")";
         }
 
         $query .= " order by datetime " . $orderBy . " LIMIT ". $start_limit . ", " . $end_limit;

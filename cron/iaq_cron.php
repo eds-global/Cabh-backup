@@ -83,9 +83,9 @@ function getRefreshToken($refreshToken){
 
 function getConnection(){    
     // Database credentials
-    $servername = "68.178.149.225";
-    $username = "edsglobal";
-    $password = "EdS!234";
+    $servername = "139.59.34.149"; //"68.178.149.225";
+    $username = "neemdb";
+    $password = "(#&pxJ&p7JvhA7<B";
     $database = "cabh_iaq_db";
 
     // Create connection

@@ -39,7 +39,8 @@ def getRefreshToken(refreshToken):
 
 def getConnection():
     #connecting to mysql server
-    connectionConfig = 'mysql+mysqlconnector://edsglobal:EdS!234@68.178.149.225/cabh_iaq_db'
+    connectionConfig = 'mysql+mysqlconnector://neemdb:(#&pxJ&p7JvhA7<B@139.59.34.149/cabh_iaq_db'
+    #connectionConfig = 'mysql+mysqlconnector://edsglobal:EdS!234@68.178.149.225/cabh_iaq_db'
     #connectionConfig = 'mysql+mysqlconnector://root@localhost/iaq-dashboard'
     engine = create_engine(connectionConfig)
     connection = engine.connect()
