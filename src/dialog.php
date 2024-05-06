@@ -139,27 +139,30 @@
 
                 <div class="row justify-content-end mt-4">
                     <div class="col-lg-12 text-lg-right">
-                        <div class="partner-description" style="margin-left:1290px;">
+                        <div class="partner-description" style="margin-left:1395px;">
                             <button class="btn btn-success rounded-pill" style="background-color: #485E4E; border-color: #485E4E;">Register</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-             <!------------------------------------- Starting a new row for the Legal section --------------------------------------->
+          <!------------------------------------- Starting a new row for the Legal section --------------------------------------->
             <div class="row" style="margin-top: 30px;">
-                <div class="col-lg-12 text-center" style="margin-top: 20px;">
-                    <div class="partner-description">
-                        <p style="color: black;  text-align: left; margin-left: 90px; margin-right: 90px;">
-                        <b>Measurement Indoor Air Quality and Need for indoor Environment Quality Metric</b>
-                        </p>
-                        <p style="color: black;  text-align: left; margin-left: 90px; margin-right: 90px;">Dr. Pawel Wargocki will cover the 
-                        need for IAQ rating scheme. He will discuss the pros and cons of the previous attempts to develop
-                        one and of currently used indicators of IAQ. He will also outline a potential roadmap for developing IAQ index. </p>
-                        <p style="color: black;  text-align: left; margin-left: 90px; margin-right: 90px;">Dr. Pawel Wargocki I Associate 
-                        Professor, Technical University of Denmark</p>
+                <div class="col-lg-12 text-center">
+                    <div style="margin-left: 20px; margin-right: 20px;">
+                        <div class="partner-description" style="background-color: #D9D9D9;">
+                            <p style="color: black; text-align: left;">
+                                <b>Measurement Indoor Air Quality and Need for indoor Environment Quality Metric</b>
+                            </p>
+                            <p style="color: black; text-align: left;">
+                                Dr. Pawel Wargocki will cover the need for IAQ rating scheme. He will discuss the pros and cons of the previous attempts to develop one and of currently used indicators of IAQ. He will also outline a potential roadmap for developing IAQ index.
+                            </p>
+                            <p style="color: black; text-align: left;">
+                                Dr. Pawel Wargocki | Associate Professor, Technical University of Denmark
+                            </p>
+                        </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
     </div>

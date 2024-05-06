@@ -74,20 +74,20 @@
             <div class="row justify-content-center"> <!-- Centering the content -->
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <h4 class="heading-about"> ABOUT CABH </h4>
+                        <h4 class="heading-about" style="font-weight: normal;"> ABOUT CABH </h4>
                     </div>
                 </div>
                 <!-- <div style="background-color: #f2f2f2; padding: 18px;"> -->
-                    <div class="row" id="grey">
+                    <div class="row" id="grey" style="background-color: #D9D9D9;">
                         <div class="col-lg-6 about-bg" style="margin-top: 20px;">
                             <div class="about-content">
                                 <p style="color: black; margin-left: 110px;">
-                                    Cleaner Air and Better Health is a five-year project supported by the United States Agency for
-                                    International Development. It aims to strengthen air pollution mitigation and reduce exposure to
-                                    air pollution in India by establishing evidence-based models for better air quality management.<br><br>
-                                    The project is being implemented by a consortium led by the Council on Energy, Environment, and Water 
-                                    and includes ASAR Social Impact Advisors, Environmental Design Solutions Defence Firm, and Vital Strategies 
-                                    Legal.
+                                    <b>Cleaner Air and Better Health</b> is a five-year <b>project supported by the United States Agency</b> for
+                                    International Development. It aims to <b>strengthen air pollution mitigation and reduce exposure to
+                                    air pollution</b> in India by establishing <b>evidence-based models for better air quality management.</b><br><br>
+                                    The project is being <b>implemented by a consortium</b> led by the Council on Energy, Environment, and Water 
+                                    and includes ASAR Social Impact Advisors, Environmental Design Solutions Defence Firm, and Vital 
+                                    Strategies Legal.
                                 </p>
                             </div>
                         </div>
@@ -120,8 +120,8 @@
                         </div>
                     </div>
                     <div class="col-lg-4 text-center" style="margin-top: 20px;">
-                        <img class="partner-logo smaller" src="../images/asar.png" alt="ASAR Logo" style="width: 180px;">
-                        <div class="partner-description" style="margin-top: 20px;">
+                        <img class="partner-logo smaller" src="../images/asar.png" alt="ASAR Logo" style="width: 130px;">
+                        <div class="partner-description" style="margin-top: 30px;">
                             <p style="color: black; margin-right:70px;">ASAR is known for its innovative approach to policy analysis. 
                                 They strive to make a meaningful impact in the region.
                             </p>
@@ -152,7 +152,7 @@
                     <div class="col-lg-12 text-center">
                         <h4 class="heading-about"> CONTACT </h4>
                     </div>
-                    <div class="row" style="background-color: #f2f2f2; margin-left:250px; margin-top:10px;">
+                    <div class="row" style="margin-left:100px; margin-top:10px; Background-color: #D9D9D9;">
                         <div class="col-lg-4 text-center">
                             <div class="partner-description">
                                 <p style="color: black; text-align: left; margin-left:20px;">
@@ -167,7 +167,7 @@
                         </div>
                         <div class="col-lg-4 text-center">
                             <div class="partner-description">
-                                <p style="color: black; text-align: left;">
+                                <p style="color: black; text-align: left; margin-left:99px;">
                                     <b>Om Prakash Singh</b><br>
                                     Chief of Party, Cleaner Air and<br>
                                     Better Health Project<br>
@@ -179,10 +179,10 @@
                         </div>
                         <div class="col-lg-4 text-center">
                             <div class="partner-description">
-                                <p style="color: black; text-align: left;">
+                                <p style="color: black; text-align: left; margin-left:99px;">
                                     <b>Soumitri Das</b><br>
                                     Project Management Specialist<br>
-                                    Environment United States Agency for<br>
+                                    Environment United States Agency for
                                     International Development<br>
                                     #USAID Phone: +91-11-219-8000<br>
                                     Email: sodas@usaid.gov
