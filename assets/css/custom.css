@@ -144,3 +144,13 @@ footer.site-footer .footer-inner a {
   .header-menu{
     margin-top: 5px;
   }
+
+  .btn{
+    background-color: #485e4e;
+    color: #eece49;
+    padding: 7px 25px;
+  }
+
+  .location_select .dropdown-toggle {
+    width:150%!important;
+  }
