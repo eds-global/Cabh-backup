@@ -1,7 +1,27 @@
 
-        <!-- Header-->
+    
+    
+    <!-- Header-->
         
         <?php include 'partials/header.php' ?>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" integrity="sha512-mR/b5Y7FRsKqrYZou7uysnOdCIJib/7r5QeJMFvLNHNhtye3xJp1TdJVPLtetkukFn227nKpXD9OjUc09lx97Q==" crossorigin="anonymous"
+  referrerpolicy="no-referrer" />
+
+        <style>
+
+            .marker {
+        background-image: url('<?php echo $_SESSION['config']->server_host?>/images/pin.png');
+        background-size: cover;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      
+
+            </style>
+        
         <!-- /#header -->
         <!-- Content -->
         <div class="content">
@@ -12,10 +32,92 @@
                     <div class="col-lg-12 col-md-12">
                         <div class="card">
                             <div class="card-body float-left">
-                                <div class="float-right">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="row">
+                                            
+                                            <label>Duration</label>
+                                            <select id="duration" class="selectpicker" aria-label="duration" >
+                                                <option> Last 24 Hour </option>
+                                                <option> Last Week</option>
+                                                <option>Last Year </option>
+                                                <option> Custom Range</option>
 
-                                    <h4 class="box-title">Filter </h4>
-                                    
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="row">
+                                            <label>Typology</label>
+                                        
+                                            <select id="typology" class="selectpicker" multiple aria-label="typology" >
+                                                <option id="all" value="all" selected> All</option>
+                                            <?php
+                                                $curl = curl_init();
+
+                                                curl_setopt_array($curl, array(
+                                                CURLOPT_URL => $_SESSION['config']->api_host.'/api/dashboard/getTypology',
+                                                CURLOPT_RETURNTRANSFER => true,
+                                                CURLOPT_ENCODING => '',
+                                                CURLOPT_MAXREDIRS => 10,
+                                                CURLOPT_TIMEOUT => 0,
+                                                CURLOPT_FOLLOWLOCATION => true,
+                                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                                CURLOPT_CUSTOMREQUEST => 'POST',
+                                                ));
+
+                                                $response = curl_exec($curl);
+
+                                                curl_close($curl);
+                                                $data = json_decode($response, true);
+                                                foreach ($data['Data'] as $typology){
+                                                    echo "<option>" . $typology . "</option>";
+                                                }
+                                                
+                                            ?>
+                                            </select>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="row">
+                                            
+                                            <label>Location</label>
+                                        
+                                            <select id="location" class="selectpicker location_select" multiple aria-label="location" style="width:auto">
+                                                <option id="all" value="all" selected> All</option>
+                                            <?php
+                                                $curl = curl_init();
+
+                                                curl_setopt_array($curl, array(
+                                                CURLOPT_URL => $_SESSION['config']->api_host.'/api/dashboard/getLocation',
+                                                CURLOPT_RETURNTRANSFER => true,
+                                                CURLOPT_ENCODING => '',
+                                                CURLOPT_MAXREDIRS => 10,
+                                                CURLOPT_TIMEOUT => 0,
+                                                CURLOPT_FOLLOWLOCATION => true,
+                                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                                CURLOPT_CUSTOMREQUEST => 'POST',
+                                                ));
+
+                                                $response = curl_exec($curl);
+
+                                                curl_close($curl);
+                                                $data = json_decode($response, true);
+                                                foreach ($data['Data'] as $location){
+                                                    echo "<option>" . $location . "</option>";
+                                                }
+                                                
+                                            ?>
+                                            </select>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="row float-right">
+                                        <input type="button" value="Filter" class="btn">
+                                        <div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -568,27 +670,82 @@
         <div class="clearfix"></div>
         <!-- Footer -->
         <?php include 'partials/footer.php' ?>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2jlT6C_to6X1mMvR9yRWeRvpIgTXgddM"></script>
+        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2jlT6C_to6X1mMvR9yRWeRvpIgTXgddM"></script>
 
     <script src="assets/js/lib/gmap/gmaps.js"></script>
-    <script src="assets/js/init/gmap-init.js"></script>
+    <script src="assets/js/init/gmap-init.js"></script> -->
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
     <script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoiZGV2LW5pa3VuaiIsImEiOiJjbHMwYTNmdnowMDFxMmpyNTBteHoybTRwIn0.OEzenC6wBOTbqZXCUNoE7A';
-const map = new mapboxgl.Map({
-container: 'map', // container ID
-center: [77.2, 28.6], // starting position [lng, lat]
-zoom: 9 // starting zoom
-});
+    var map = new mapboxgl.Map({
+    container: 'map', // container ID
+    center: [77.2, 28.6], // starting position [lng, lat]
+    zoom: 9 // starting zoom
+
+    });
+
+    var latitude = 77.7128; // New York City latitude
+    var longitude = 28.0060; // New York City longitude
+
+    // Create a marker on the map with the given latitude and longitude
+    new mapboxgl.Marker()
+        .setLngLat([longitude, latitude])
+        .addTo(map);
+
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+    "active": 1
+    });
+
+    const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow"
+    };
+    
+    
+    // Fetch data from API
+    fetch("https://iaq-dashboard.edsglobal.com/api/device_details/get", requestOptions)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.Data)
+        if (!Array.isArray(data.Data)) {
+            throw new Error('Data is not an array');
+        }
+        // Process API response data
+        dep_data = data.Data
+        dep_data.forEach(function(markerData) {
+        // Create a marker element
+        console.log(markerData.longitude+" " + markerData.latitude)
+        var el = document.createElement('div');
+        el.className = 'marker'; //'marker';
+
+        // Create a marker on the map
+        new mapboxgl.Marker(el)
+            .setLngLat([parseFloat(markerData.longitude), parseFloat(markerData.latitude)])
+            .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+            .setHTML('<p><b>' + markerData.deployementID + ':</b><br> ' + markerData.nearby_AQI_station + '</p>'))
+            .addTo(map);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching data from API:', error);
+    });
 </script>
 
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-<script src="<?php echo $_SESSION['config']->server_host?>/assets/chartJS/amchart.js"></script>
+<!-- <script src="<?php echo $_SESSION['config']->server_host?>/assets/chartJS/amchart.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js" integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script>
+<!-- <script> -->
         jQuery(document).ready(function($) {           
             
 

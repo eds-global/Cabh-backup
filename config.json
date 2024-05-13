@@ -2,7 +2,7 @@
     "Logo":"/logos/EDSlogo.png",
     "Title":"Edsglobal",
     "Favicon":"/logos/favicon.ico",
-    "api_host":"http://localhost:8080",
+    "api_host":"https://iaq-dashboard.edsglobal.com",
     "server_host": "http://localhost:82",
     "url" : "http://localhost:8000",
     "user": "public"
