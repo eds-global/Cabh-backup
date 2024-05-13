@@ -74,53 +74,53 @@
             <div class="row justify-content-center"> <!-- Centering the content -->
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <h4 class="heading-about" style="font-weight: normal;"> ABOUT CABH </h4>
+                        <h4 class="heading-about" style="font-weight: 600;"> ABOUT CABH </h4>
                     </div>
                 </div>
                 <!-- <div style="background-color: #f2f2f2; padding: 18px;"> -->
-                    <div class="row" id="grey" style="background-color: #D9D9D9;">
-                        <div class="col-lg-6 about-bg" style="margin-top: 20px;">
-                            <div class="about-content">
-                                <p style="color: black; margin-left: 110px;">
-                                    <b>Cleaner Air and Better Health</b> is a five-year <b>project supported by the United States Agency</b> for
-                                    International Development. It aims to <b>strengthen air pollution mitigation and reduce exposure to
-                                    air pollution</b> in India by establishing <b>evidence-based models for better air quality management.</b><br><br>
-                                    The project is being <b>implemented by a consortium</b> led by the Council on Energy, Environment, and Water 
-                                    and includes ASAR Social Impact Advisors, Environmental Design Solutions Defence Firm, and Vital 
-                                    Strategies Legal.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-3 text-center align-self-center">
-                            <img src="../images/cabh_about.png" alt="CABH Logo" style="max-width: 160%; height: auto;">
+                <div class="row" id="grey" style="background-color: #D9D9D9;">
+                    <div class="col-lg-6 about-bg" style="margin-top: 10px;">
+                        <div class="about-content">
+                            <p style="color: black; margin-left: 70px;">
+                                <b>Cleaner Air and Better Health</b> is a five-year <b>project supported by the United States Agency</b> for
+                                International Development. It aims to <b>strengthen air pollution mitigation and reduce exposure to
+                                air pollution</b> in India by establishing <b>evidence-based models for better air quality management.</b><br><br>
+                                The project is being <b>implemented by a consortium</b> led by the Council on Energy, Environment, and Water 
+                                and includes ASAR Social Impact Advisors, Environmental Design Solutions Defence Firm, and Vital 
+                                Strategies Legal.
+                            </p>
                         </div>
                     </div>
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-3 text-center align-self-center">
+                        <img src="../images/cabh_about.png" alt="CABH Logo" style="max-width: 160%; height: auto;">
+                    </div>
+                </div>
                 <!-- </div> -->
 
                 <!----------------------------------------- Partners Section --------------------------------------->
                 <div class="row partners-section">
-                    <div class="col-lg-12 text-center">
-                        <h4 class="heading-about"> PARTNERS </h4>
+                    <div class="col-lg-12 text-center" style="margin-bottom: 20px;">
+                        <h4 class="heading-about" style="font-weight: 600;"> PARTNERS </h4>
                     </div>
-                    <div class="col-lg-4 text-center" style="margin-top: 20px;">
-                        <img class="partner-logo" src="../images/ceew.png" alt="CEEW Logo" style="width: 130px;">
+                    <div class="col-lg-4 col-md-12">
+                        <img class="partner-logo" src="../images/ceew.png" alt="CEEW Logo">
                         <div class="partner-description" style="margin-top: 20px;">
                             <p style="color: black; margin-left:60px;">CEEW is one of Asia's leading not-for-profit policy research institutions. 
                                 It prides itself on the independence of its high-quality research.
                             </p>
                         </div>
                     </div>
-                    <div class="col-lg-4 text-center" style="margin-top: 20px;">
-                        <img class="partner-logo smaller" src="../images/eds_logo.gif" alt="EDS Logo" style="width: 160px;">
+                    <div class="col-lg-4 col-md-12">
+                        <img class="partner-logo smaller" src="../images/eds_logo.gif" alt="EDS Logo" style="width: 120px;">
                         <div class="partner-description" style="margin-top: 20px;">
                             <p style="color: black; margin-right:30px; margin-left:30px;">EDS is another leading organization in the field. 
                                 Their commitment to excellence drives their research initiatives.
                             </p>
                         </div>
                     </div>
-                    <div class="col-lg-4 text-center" style="margin-top: 20px;">
-                        <img class="partner-logo smaller" src="../images/asar.png" alt="ASAR Logo" style="width: 130px;">
+                    <div class="col-lg-4 col-md-12">
+                        <img class="partner-logo smaller" src="../images/asar.png" alt="ASAR Logo" style="width: 110px;">
                         <div class="partner-description" style="margin-top: 30px;">
                             <p style="color: black; margin-right:70px;">ASAR is known for its innovative approach to policy analysis. 
                                 They strive to make a meaningful impact in the region.
@@ -132,13 +132,13 @@
                 <!---------------------------------------- Last two partner sections ---------------------------------------->
                 <div class="row last-partners-section justify-content-center" style="margin-top: 1px;">
                     <div class="col-lg-4 text-center">
-                        <img class="partner-logo" src="../images/vital.png" alt="Vital Logo" style="width: 290px;">
+                        <img class="partner-logo" src="../images/vital.png" alt="Vital Logo" style="width: 140px;">
                         <div class="partner-description">
                             <p style="color: black;">Vital Strategies Legal is dedicated to improving public health around the world.</p>
                         </div>
                     </div>
                     <div class="col-lg-4 text-center">
-                        <img class="partner-logo smaller" src="../images/eldf.png" alt="ELDF Logo">
+                        <img class="partner-logo smaller" src="../images/eldf.png" alt="ELDF Logo" style="width: 80px;">
                         <div class="partner-description">
                             <p style="color: black;">ELDF is committed to promoting sustainable development through legal advocacy.</p>
                         </div>
@@ -150,10 +150,10 @@
                 <!------------------------- Starting a new row for the Contact section ------------------------------>
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <h4 class="heading-about"> CONTACT </h4>
+                        <h4 class="heading-about" style="font-weight: 600;"> CONTACT </h4>
                     </div>
                     <div class="row" style="margin-left:100px; margin-top:10px; Background-color: #D9D9D9;">
-                        <div class="col-lg-4 text-center">
+                        <div class="col-lg-4 text-center" style="margin-top: 20px;">
                             <div class="partner-description">
                                 <p style="color: black; text-align: left; margin-left:20px;">
                                     <b>Lakshmy Narayankutty</b><br>
@@ -165,7 +165,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="col-lg-4 text-center">
+                        <div class="col-lg-4 text-center" style="margin-top: 20px;">
                             <div class="partner-description">
                                 <p style="color: black; text-align: left; margin-left:99px;">
                                     <b>Om Prakash Singh</b><br>
@@ -177,7 +177,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="col-lg-4 text-center">
+                        <div class="col-lg-4 text-center" style="margin-top: 20px;">
                             <div class="partner-description">
                                 <p style="color: black; text-align: left; margin-left:99px;">
                                     <b>Soumitri Das</b><br>
@@ -195,7 +195,7 @@
                  <!------------------------------------- Starting a new row for the Legal section --------------------------------------->
                  <div class="row" style="margin-top: 30px;">
                     <div class="col-lg-12 text-center">
-                        <h4 class="heading-about"> LEGAL </h4>
+                        <h4 class="heading-about" style="font-weight: 600;"> LEGAL </h4>
                     </div>
                     <div class="col-lg-12 text-center" style="margin-top: 20px;">
                         <div class="partner-description">
