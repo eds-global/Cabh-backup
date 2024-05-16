@@ -46,7 +46,7 @@ footer.site-footer .footer-inner a {
 }
 .navbar-nav li a.active{
     font-weight: 400;
-    color:yellow;
+    color:#E9BC6D;
     
 }
 
@@ -145,12 +145,16 @@ footer.site-footer .footer-inner a {
     margin-top: 5px;
   }
 
-  .btn{
+  input.btn{
     background-color: #485e4e;
-    color: #eece49;
+    color: #E9BC6D;
     padding: 7px 25px;
   }
 
   .location_select .dropdown-toggle {
     width:150%!important;
   }
+
+input.pollutant_radio{
+    margin-top:5px!important;
+}

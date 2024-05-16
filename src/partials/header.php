@@ -90,8 +90,8 @@
                 <!-- <div class="header-menu"> -->
                     <div class="header-left" >
                     <div class="navbar-header text-right" >
-                    <a class="navbar-brand" href="./" style="width:120px; margin-right:0;"><img src="<?php echo $_SESSION['config']->server_host?>/images/EDSlogo.png" alt="Logo" style="max-width:120px; margin-right:0;"></style></a>
-                    <a class="navbar-brand" href="./" style="width:120px; margin-right:0;"><img src="<?php echo $_SESSION['config']->server_host?>/images/ceew.png" alt="Logo" style="max-width:130px; margin-right:0;"></a>
+                    <a class="navbar-brand" href="./" style="width:120px; margin-right:0;"><img src="<?php echo $_SESSION['config']->server_host?>/images/EDSlogo.png" alt="Logo" style="max-width:120px; margin-right:0;max-height:53px;    margin-top: 5px;"></style></a>
+                    <a class="navbar-brand" href="./" style="width:120px; margin-right:0;"><img src="<?php echo $_SESSION['config']->server_host?>/images/ceew.png" alt="Logo" style="max-width:130px; margin-right:0;max-height:45px;    margin-top: 5px;"></a>
                         
                 <!-- </div> -->
                     
