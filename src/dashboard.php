@@ -37,6 +37,18 @@
         /* padding-left:10px; */
         text-align:center;
       }
+     /*  .marker::before {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 12px solid #023170; /* Triangle color */
+      /*top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+    } */
       .text-overlay {
       position: absolute;
       top: 10px;
@@ -215,11 +227,11 @@
 	mapboxgl.accessToken = 'pk.eyJ1IjoiZGV2LW5pa3VuaiIsImEiOiJjbHMwYTNmdnowMDFxMmpyNTBteHoybTRwIn0.OEzenC6wBOTbqZXCUNoE7A';
     var map = new mapboxgl.Map({
     container: 'map', // container ID
-    style: 'mapbox://styles/dev-nikunj/clw4k1rgq02jw01qvgmjr18op',
-    center: [77.2, 28.58], // starting position [lng, lat]
+    style: 'mapbox://styles/dev-nikunj/clw4k1rgq02jw01qvgmjr18op', //'mapbox://styles/mapbox/light-v11',
+    center: [77.2, 28.55], // starting position [lng, lat] [77.2, 28.58]
     scrollZoom: false, // Disable scroll zoom
     dragPan: false, // Disable drag pan
-    zoom: 10 // starting zoom
+    zoom: 10.5 // starting zoom //10
 
     });
 
