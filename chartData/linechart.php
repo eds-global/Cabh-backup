@@ -2,14 +2,16 @@
     if ($_POST) {
         $duration = $_POST['duration'];
         $typology = implode(',', $_POST['typology']);
-        $location = implode(',',$_POST['location']);
+        $spaceType = implode(',',$_POST['spaceType']);
+        $sensorID = implode(',',$_POST['sensorID']);
         $pollutants = $_POST['pollutants'];
         //return json_encode(['Response' => 'Success', 'Data' => $pollutants]);
 
         $parameter = [
             'duration' => $duration,
             'typology' => $typology,
-            'location' => $location,
+            'spaceType' => $spaceType,
+            'sensorID' => $sensorID,
             'pollutant' => $pollutants
         ];
 

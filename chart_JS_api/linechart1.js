@@ -1,5 +1,5 @@
-function getLinechart1(duration, typology, nearByStation, pollutants, post_url){
-    console.log("function called " + duration + typology + nearByStation + pollutants);
+function getLinechart1(duration, typology, spaceType, sensorID, pollutants, post_url){
+    console.log("function called " + duration + typology + spaceType +  sensorID + pollutants);
     $.ajax({
         url: post_url, // URL of the PHP file
         type: 'POST', // Use POST method
@@ -7,12 +7,14 @@ function getLinechart1(duration, typology, nearByStation, pollutants, post_url){
         data: { 
             duration: duration,
             typology: typology,
-            location: nearByStation,
+            spaceType: spaceType,
+            sensorID: sensorID,
             pollutants: pollutants
             }, // Data to send in the request
         success: function(response) {
             // Handle the successful response
             //alert(response);
+            //console.log(response);
             var result = JSON.parse(response);
             if(result.ApiResponse=="Success"){
                 indoordata = result.Data;
@@ -37,24 +39,24 @@ function updateLineChart(chart_data, pollutants){
   var label = "";
   var unit = "";
   if (pollutants == "pm25"){
-    label = "PM 2.5: ";
+    label = "PM 2.5:";
     unit = "(µg/m[fontSize:10px; verticalAlign: super;]3[/]) ";
   }
   if (pollutants == "pm10"){
-    label = "PM 10: ";
+    label = "PM 10:";
     unit = "(µg/m[fontSize:10px; verticalAlign: super;]3[/])";
 
   }
   if (pollutants == "aqi"){
-    label = "AQI ";
+    label = "AQI:";
     unit = ""
   }
   if (pollutants == "co2"){
-    label = "CO[fontSize:10px; verticalAlign: sub;]2[/]): ";
+    label = "CO[fontSize:10px; verticalAlign: sub;]2[/]:";
     unit = "(ppm)";
   }
   if (pollutants == "voc"){
-    label = "TVOC: ";
+    label = "TVOC:";
     unit = "(µg/m[fontSize:10px; verticalAlign: super;]3[/])";
 
   }
@@ -128,7 +130,7 @@ var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
 }));
 
 yAxis.children.moveValue(am5.Label.new(root, {
-  text: label + ' ' + unit,
+  text: label.substring(0, label.length - 1) + ' ' + unit,
   textAlign: 'center',
   y: am5.p50,
     rotation: -90,
@@ -144,7 +146,7 @@ var series = chart.series.push(am5xy.LineSeries.new(root, {
   valueYField: pollutants,
   valueXField: "datetime",
   tooltip: am5.Tooltip.new(root, {
-    labelText: label + "{valueY} "
+    labelText: label + " {valueY} "
   }),
   legendLabelText: "{name}",
 }));

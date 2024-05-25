@@ -59,6 +59,64 @@
         }
     }
 
+    function getSpaceType(){
+        
+        $conn = db_connect();
+        $query = "select distinct spaceType from device_details";
+        try{        
+            $result = $conn->query($query);
+            if ($result->num_rows > 0) {
+                $spaceType = array();
+
+                // Loop through each row of the result set
+                while($row = $result->fetch_assoc()) {
+                    // Add the value of the column to the array
+                    if($row['spaceType']!= ""){
+                        $spaceType[] = $row['spaceType'];
+                    }
+                }
+                
+                //$rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                return  json_encode ( [ 'ApiResponse' => 'Success', 'RowCount' => count($spaceType), 'Data' => $spaceType ] );
+            } else {
+                return json_encode ( [ 'ApiResponse' => 'Success', 'RowCount' => $result->num_rows, 'Message' => "No records found" ] );;
+            }
+
+        }
+        catch(Exception $e){
+            return json_encode ( [ 'ApiResponse' => 'Fail',  'Message' => $e.getMessage()]);
+        }
+    }
+
+    function getSensorID(){
+        
+        $conn = db_connect();
+        $query = "select distinct deviceID from device_details";
+        try{        
+            $result = $conn->query($query);
+            if ($result->num_rows > 0) {
+                $sensorID = array();
+
+                // Loop through each row of the result set
+                while($row = $result->fetch_assoc()) {
+                    // Add the value of the column to the array
+                    if($row['deviceID']!= ""){
+                        $sensorID[] = $row['deviceID'];
+                    }
+                }
+                
+                //$rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                return  json_encode ( [ 'ApiResponse' => 'Success', 'RowCount' => count($sensorID), 'Data' => $sensorID ] );
+            } else {
+                return json_encode ( [ 'ApiResponse' => 'Success', 'RowCount' => $result->num_rows, 'Message' => "No records found" ] );;
+            }
+
+        }
+        catch(Exception $e){
+            return json_encode ( [ 'ApiResponse' => 'Fail',  'Message' => $e.getMessage()]);
+        }
+    }
+
 
     function getDialData(){
         $conn = db_connect();
@@ -195,9 +253,11 @@
         //set default parameters
         $duration = '24hour';
         $typology = 'All';
-        $location = 'All';
+        $spaceType = 'All';
+        $sensorID = 'All';
         $pollutant = "pm25";
-        $location_filter = "n";
+        $spaceType_filter = "n";
+        $sensorID_filter = "n";
         $typology_filter = 'n';
         //get input from api call
         if(file_get_contents('php://input')){
@@ -205,7 +265,8 @@
             $data = json_decode($json,true);
             $duration = $data["duration"];
             $typology = $data["typology"];
-            $location = $data["location"];
+            $spaceType = $data["spaceType"];
+            $sensorID = $data["sensorID"];
             $pollutant = $data["pollutant"];
                    
         }
@@ -249,11 +310,17 @@
         } 
         $typology  =  "'" . str_replace(",","','", $typology ) . "'";
 
-        //get location
-        if(strpos($location, 'All') === false){   // if 'All' not found
-            $location_filter = "y";
+        //get spacetype
+        if(strpos($spaceType, 'All') === false){   // if 'All' not found
+            $spaceType_filter = "y";
         } 
-        $location  =  "'" . str_replace(",","','", $location ) . "'";
+        $spaceType  =  "'" . str_replace(",","','", $spaceType ) . "'";
+
+        //get sensor id
+        if(strpos($sensorID, 'All') === false){   // if 'All' not found
+            $sensorID_filter = "y";
+        } 
+        $sensorID  =  "'" . str_replace(",","','", $sensorID ) . "'";
 
 
         $column_nm = "max_". $pollutant;
@@ -262,8 +329,11 @@
         if($typology_filter == 'y'){
             $select_query .=  "  and typology in ($typology) ";
         }
-        if($location_filter == 'y'){
-            $select_query .=  " and nearby_AQI_station in ($location) ";
+        if($spaceType_filter == 'y'){
+            $select_query .=  " and spacetype in ($spaceType) ";
+        }
+        if($sensorID_filter == 'y'){
+            $select_query .=  " and a.deviceID in ($sensorID) ";
         }
         $select_query .=  " group by datetime order by datetime ";
         //return  json_encode ( [ 'ApiResponse' => 'Success', 'RowCount' => '10', 'Query' => $select_query  ] );

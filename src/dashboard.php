@@ -66,6 +66,119 @@
                     <div class="card-body" >
                         <!-- filter -->
                         <div class="row">
+                            <div class="col-lg-6 col-md-6" style="align-content: end; text-align: center;">
+                                <input type="button" class="btn" id="btnduration1" name="btnduration" value="24 Hour">
+                                <input type="button" class="btn" id="btnduration2" name="btnduration" value="Week"   >
+                                <input type="button" class="btn" id="btnduration3" name="btnduration" value="Month"  >
+                                <input type="button" class="btn" id="btnduration4" name="btnduration" value="YTD"  >
+
+
+
+                            </div>
+                            
+                            <div class="col-lg-2 col-md-2">
+                                <div class="row">
+                                    <label>Typology</label>
+                                
+                                    <select id="typology" name="typology" class="selectpicker" multiple aria-label="typology" >
+                                        <option id="All" value="All" selected> All</option>
+                                    <?php
+                                        $curl = curl_init();
+
+                                        curl_setopt_array($curl, array(
+                                        CURLOPT_URL => $_SESSION['config']->api_host.'/api/dashboard/getTypology',
+                                        CURLOPT_RETURNTRANSFER => true,
+                                        CURLOPT_ENCODING => '',
+                                        CURLOPT_MAXREDIRS => 10,
+                                        CURLOPT_TIMEOUT => 0,
+                                        CURLOPT_FOLLOWLOCATION => true,
+                                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                        CURLOPT_CUSTOMREQUEST => 'POST',
+                                        ));
+
+                                        $response = curl_exec($curl);
+
+                                        curl_close($curl);
+                                        $data = json_decode($response, true);
+                                        foreach ($data['Data'] as $typology){
+                                            echo "<option>" . $typology . "</option>";
+                                        }
+                                        
+                                    ?>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <div class="row">
+                                    
+                                    <label>Space Type</label>
+                                
+                                    <select id="spaceType" name="spaceType" class="selectpicker spaceType_select" multiple aria-label="spaceType" style="width:auto">
+                                        <option id="All" value="All" selected> All</option>
+                                    <?php
+                                        $curl = curl_init();
+
+                                        curl_setopt_array($curl, array(
+                                        CURLOPT_URL => $_SESSION['config']->api_host.'/api/dashboard/getSpaceType',
+                                        CURLOPT_RETURNTRANSFER => true,
+                                        CURLOPT_ENCODING => '',
+                                        CURLOPT_MAXREDIRS => 10,
+                                        CURLOPT_TIMEOUT => 0,
+                                        CURLOPT_FOLLOWLOCATION => true,
+                                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                        CURLOPT_CUSTOMREQUEST => 'POST',
+                                        ));
+
+                                        $response = curl_exec($curl);
+
+                                        curl_close($curl);
+                                        $data = json_decode($response, true);
+                                        foreach ($data['Data'] as $spaceType){
+                                            echo "<option>" . $spaceType . "</option>";
+                                        }
+                                        
+                                    ?>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <div class="row">
+                                    
+                                    <label>Sensor ID</label>
+                                
+                                    <select id="sensorID" name="sensorID" class="selectpicker sensorID_select" multiple aria-label="sensorID" style="width:auto">
+                                        <option id="All" value="All" selected> All</option>
+                                    <?php
+                                        $curl = curl_init();
+
+                                        curl_setopt_array($curl, array(
+                                        CURLOPT_URL => $_SESSION['config']->api_host.'/api/dashboard/getSensorID',
+                                        CURLOPT_RETURNTRANSFER => true,
+                                        CURLOPT_ENCODING => '',
+                                        CURLOPT_MAXREDIRS => 10,
+                                        CURLOPT_TIMEOUT => 0,
+                                        CURLOPT_FOLLOWLOCATION => true,
+                                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                        CURLOPT_CUSTOMREQUEST => 'POST',
+                                        ));
+
+                                        $response = curl_exec($curl);
+
+                                        curl_close($curl);
+                                        $data = json_decode($response, true);
+                                        foreach ($data['Data'] as $sensorID){
+                                            echo "<option>" . $sensorID . "</option>";
+                                        }
+                                        
+                                    ?>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <!-- <div class="row">
                             <div class="col-lg-2 col-md-2" style="align-content: end; text-align: center;">
                                 <input type="button" class="btn" id="btnduration1" name="btnduration" value="24 Hour">
                             </div>
@@ -145,7 +258,7 @@
                                 </div>
                                 
                             </div>
-                        </div>
+                        </div> -->
                         <!-- /# filter -->
 
                         <!-- line chart --> 
@@ -412,53 +525,70 @@
             var post_url = '<?php echo $_SESSION['config']->server_host?>/chartData/linechart.php';
             var duration = $('#hid_duration').val();
             var typology = $('#typology').val();
-            var loc = $('#location').val();
+            var spaceType = $('#spaceType').val();
+            var sensorID = $('#sensorID').val();
             var pollutants = 'pm25';
-            getLinechart1(duration, typology, loc,pollutants,post_url);
+            getLinechart1(duration, typology,  spaceType, sensorID, pollutants, post_url);
             $('#btnduration1').click(function() {
                 var duration = '24hour'; 
                 var typology = $('#typology').val();
-                var loc = $('#location').val();
+                var spaceType = $('#spaceType').val();
+                var sensorID = $('#sensorID').val();
                 $('#hid_duration').val('24hour');
-                getLinechart1(duration, typology, loc,pollutants,post_url);
+                getLinechart1(duration, typology, spaceType, sensorID, pollutants,post_url);
             });
             $('#btnduration2').click(function() {
                 var duration = 'week';  
                 var typology = $('#typology').val();
-                var loc = $('#location').val();
+                var spaceType = $('#spaceType').val();
+                var sensorID = $('#sensorID').val();
                 $('#hid_duration').val('week');
-                getLinechart1(duration, typology, loc,pollutants, post_url);
+                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
             });
             $('#btnduration3').click(function() {
                 var duration = 'month'; 
                 var typology = $('#typology').val();
-                var loc = $('#location').val();
+                var spaceType = $('#spaceType').val();
+                var sensorID = $('#sensorID').val();
                 $('#hid_duration').val('month');
-                getLinechart1(duration, typology, loc,pollutants, post_url);
+                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
             });
             $('#btnduration4').click(function() {
                 var duration = 'ytd';  
                 var typology = $('#typology').val();
-                var loc = $('#location').val();
+                var spaceType = $('#spaceType').val();
+                var sensorID = $('#sensorID').val();
                 $('#hid_duration').val('ytd');
-                getLinechart1(duration, typology, loc,pollutants, post_url);
+                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
             });
             $('#typology').on('change', function() {
                 var duration = $('#hid_duration').val();
                 var typology = $('#typology').val();
-                getLinechart1(duration, typology, loc,pollutants, post_url);
+                var spaceType = $('#spaceType').val();
+                var sensorID = $('#sensorID').val();
+                getLinechart1(duration, typology, spaceType, sensorID,pollutants, post_url);
             });
-            $('#location').on('change', function() {
+            $('#spaceType').on('change', function() {
                 var duration = $('#hid_duration').val();
-                var loc = $('#location').val();
-                getLinechart1(duration, typology, loc,pollutants, post_url);
+                var typology = $('#typology').val();
+                var spaceType = $('#spaceType').val();
+                var sensorID = $('#sensorID').val();
+                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            });
+            $('#sensorID').on('change', function() {
+                var duration = $('#hid_duration').val();
+                var typology = $('#typology').val();
+                var spaceType = $('#spaceType').val();
+                var sensorID = $('#sensorID').val();
+                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
             });
             $('input[name=line_radio_pullutant]').change(function(){
                 var duration = $('#hid_duration').val();
                 var typology = $('#typology').val();
-                var loc = $('#location').val();
+                var spaceType = $('#spaceType').val();
+                var sensorID = $('#sensorID').val();
                 pollutants = $('#line_radio_pullutant:checked').val();
-                getLinechart1(duration, typology, loc,pollutants, post_url);
+                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
 
             });
         });
