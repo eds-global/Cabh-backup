@@ -188,4 +188,100 @@
             return json_encode ( [ 'ApiResponse' => 'Fail',  'Message' => $e.getMessage()]);
         }
     }
+
+
+    function getIndoorData(){
+        $conn = db_connect();
+        //set default parameters
+        $duration = '24hour';
+        $typology = 'All';
+        $location = 'All';
+        $pollutant = "pm25";
+        $location_filter = "n";
+        $typology_filter = 'n';
+        //get input from api call
+        if(file_get_contents('php://input')){
+            $json = file_get_contents('php://input'); 
+            $data = json_decode($json,true);
+            $duration = $data["duration"];
+            $typology = $data["typology"];
+            $location = $data["location"];
+            $pollutant = $data["pollutant"];
+                   
+        }
+        //convert duration to start and end date
+        $start_dt = new DateTime();
+        $end_dt = new DateTime();
+        if($duration == 'week'){
+            //set duration for week
+            $start_dt->modify("-7 day")->format('Y-m-d H:i:s');
+            $end_dt = $end_dt->format('Y-m-d H:i:s');
+            $start_dt = $start_dt->format('Y-m-d H:i:s');
+
+            $dt = $start_dt  . " - " . $end_dt ;
+
+        }else if($duration == 'month'){
+            //set duration for month
+            $start_dt->modify("-1 month")->format('Y-m-d H:i:s');
+            $end_dt = $end_dt->format('Y-m-d H:i:s');
+            $start_dt = $start_dt->format('Y-m-d H:i:s');
+
+            $dt = $start_dt  . " - " . $end_dt ;
+
+        }else if($duration == 'ytd'){
+            //set duration for ytd
+            $start_dt = '2024-01-01 00:00:00';
+            $end_dt = $end_dt->format('Y-m-d H:i:s');
+            //$start_dt = $start_dt->format('Y-m-d H:i:s');
+
+            $dt = $start_dt . " - " . $end_dt ;
+        }else{
+            //set duration for 24 hour
+            $start_dt->modify("-24 hour")->format('Y-m-d H:i:s');
+            $end_dt = $end_dt->format('Y-m-d H:i:s');
+            $start_dt = $start_dt->format('Y-m-d H:i:s');
+            $dt = $start_dt  . " - " . $end_dt ;
+        }
+        
+        //get typology 
+        if(strpos($typology, 'All') === false){
+            $typology_filter = "y";
+        } 
+        $typology  =  "'" . str_replace(",","','", $typology ) . "'";
+
+        //get location
+        if(strpos($location, 'All') === false){   // if 'All' not found
+            $location_filter = "y";
+        } 
+        $location  =  "'" . str_replace(",","','", $location ) . "'";
+
+
+        $column_nm = "max_". $pollutant;
+
+        $select_query = "select DATE_FORMAT(datetime, '%Y-%m-%d %H:%i:00') as datetime, round(avg($column_nm),2) as '$pollutant' from device_details a join reading_15min b on a.deviceID = b.deviceID where (datetime between '$start_dt' and '$end_dt') ";
+        if($typology_filter == 'y'){
+            $select_query .=  "  and typology in ($typology) ";
+        }
+        if($location_filter == 'y'){
+            $select_query .=  " and nearby_AQI_station in ($location) ";
+        }
+        $select_query .=  " group by datetime order by datetime ";
+        //return  json_encode ( [ 'ApiResponse' => 'Success', 'RowCount' => '10', 'Query' => $select_query  ] );
+
+        try{        
+            $result = $conn->query($select_query);
+            
+            if ($result->num_rows > 0) {
+                
+                $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                return  json_encode ( [ 'ApiResponse' => 'Success', 'RowCount' => $result->num_rows, 'Query' => $select_query ,'Data' => $rows ] );
+            } else {
+                return json_encode ( [ 'ApiResponse' => 'Success', 'RowCount' => $result->num_rows, 'Message' => "No records found" , 'query' => $select_query]);
+            }
+
+        }
+        catch(Exception $e){
+            return json_encode ( [ 'ApiResponse' => 'Fail',  'Message' => $e.getMessage()]);
+        }
+    }
 ?>

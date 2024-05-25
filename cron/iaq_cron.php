@@ -442,7 +442,7 @@ function saveCPCBData2DB($data){
                     //if meter send new data update last_data table
                     $last_data_update_query = "update last_data set datetime =  '" . $dt['datetime'] . "' where deviceID = '" . $deviceID. "'";
                     if ($conn->query($last_data_update_query) === TRUE) {
-                        logMsg("last data updated for " . $deviceID . " meter ")  ;
+                        logMsg("last data updated for " . $dt['deviceID'] . " meter ")  ;
                 
                     }
                     else {
@@ -478,7 +478,7 @@ function saveCPCBData2DB($data){
 
     }
     else {
-        logMsg ("Error: " . $insert_query . "<br>" . $conn->error);
+        logMsg ("Error: " . $insert_query . " " . $conn->error);
     }
 }
 
