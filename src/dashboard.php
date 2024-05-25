@@ -1,295 +1,219 @@
+<!-- Header-->   
+<?php include 'partials/header.php' ?>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" integrity="sha512-mR/b5Y7FRsKqrYZou7uysnOdCIJib/7r5QeJMFvLNHNhtye3xJp1TdJVPLtetkukFn227nKpXD9OjUc09lx97Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- /#header -->
 
-    
-    
-    <!-- Header-->
+<!-- Content -->
+<div class="content">
+    <!-- Animated -->
+    <div class="animated fadeIn">
         
-        <?php include 'partials/header.php' ?>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" integrity="sha512-mR/b5Y7FRsKqrYZou7uysnOdCIJib/7r5QeJMFvLNHNhtye3xJp1TdJVPLtetkukFn227nKpXD9OjUc09lx97Q==" crossorigin="anonymous"
-  referrerpolicy="no-referrer" />
+        <!-- map -->
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Map card -->
+                <div class="card">
+                    <div class="card-body" >
+                        <!-- place map here-->
+                        <div id="map" style="position: relative; overflow:hidden; width: 100%; height:380px "></div>
 
-        <style>
-
-            .marker {
-        /* background-image: url('<?php// echo $_SESSION['config']->server_host?>/images/flag.png');
-        background-size: cover; */
-        /* circle shape
-         background : #FF5733;
-      
-        textAlign : 'center';
-        lineHeight :40px;
-        color : #FFF;
-        fontWeight : 'bold';
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        padding-top: 10px;
-        padding-left:10px; */
-        /* cursor: pointer; */
-
-        /* rectangle shape */
-        background : #023170;
-        color : #FFF;
-        width: 75px;
-        height: 40px;
-        border-radius: 10%;
-        /* padding-top: 10px; */
-        /* padding-left:10px; */
-        text-align:center;
-      }
-     /*  .marker::before {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-      border-bottom: 12px solid #023170; /* Triangle color */
-      /*top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-    } */
-      .text-overlay {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 10px;
-      border-radius: 5px;
-      font-family: Arial, sans-serif;
-    }
-    #linechart1 {
-  width: 100%;
-  height: 500px;
-max-width: 100%
-}
-.indoor{
-    background-color: #023170;
-        color : #FFF;
-    float: left;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 40px;
-    padding-top: 10px;
-}
-.outdoor{
-    background-color:red;
-    color : #FFF;
-
-    height: 40px;
-    padding-top: 10px;
-    
-}
-
-            </style>
-        
-        <!-- /#header -->
-        <!-- Content -->
-        <div class="content">
-            <!-- Animated -->
-            <div class="animated fadeIn">
-                
-                <!-- map -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            
-                            <div class="card-body" >
-                                <div id="map" style="position: relative; overflow:hidden; width: 100%; height:380px "></div>
-                                
-                                <div style="margin-top:10px; margin-bottom:10px"> 
-                                
-                                    <form id="map_pollutant" name="map_pollutant"> 
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label" ><b>Pollutants:</b> </label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input pollutant_radio" type="radio" name="radio_pullutant" id="radio_pullutant" value="pm25" checked>
-                                            <label class="form-check-label" for="radio_pm25">PM 2.5 (µg/m<sup>3</sup>)</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input pollutant_radio" type="radio" name="radio_pullutant" id="radio_pullutant" value="pm10" >
-                                            <label class="form-check-label" for="radio_pm10">PM 10 (µg/m<sup>3</sup>)</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input pollutant_radio" type="radio" name="radio_pullutant" id="radio_pullutant" value="aqi">
-                                            <label class="form-check-label" for="radio_pm10">AQI</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input pollutant_radio" type="radio" name="radio_pullutant" id="radio_pullutant" value="co2">
-                                            <label class="form-check-label" for="radio_pmco2">CO<sub>2</sub> (ppm)</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input pollutant_radio" type="radio" name="radio_pullutant" id="radio_pullutant" value="voc">
-                                            <label class="form-check-label" for="radio_pmvoc">TVOC (µg/m<sup>3</sup>)</label>
-                                        </div>
-                                    </form>
-
-                                    <div style="float:right;  margin-top:-20px">
-                                        <span class="indoor" style="width:40px; padding:10px;float:none;"> Indoor </span>
-                                        <span class="outdoor" style="width:40px; padding:10px; "> outdoor </span>
-
-                                    </div>
-
+                        <div style="margin-top:10px; margin-bottom:10px"> 
+                            <!-- pollutant radio-->
+                            <form id="map_pollutant" name="map_pollutant"> 
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label" ><b>Pollutants:</b> </label>
                                 </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input pollutant_radio" type="radio" name="radio_pullutant" id="radio_pullutant" value="pm25" checked>
+                                    <label class="form-check-label" for="radio_pm25">PM 2.5 (µg/m<sup>3</sup>)</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input pollutant_radio" type="radio" name="radio_pullutant" id="radio_pullutant" value="pm10" >
+                                    <label class="form-check-label" for="radio_pm10">PM 10 (µg/m<sup>3</sup>)</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input pollutant_radio" type="radio" name="radio_pullutant" id="radio_pullutant" value="aqi">
+                                    <label class="form-check-label" for="radio_pm10">AQI</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input pollutant_radio" type="radio" name="radio_pullutant" id="radio_pullutant" value="co2">
+                                    <label class="form-check-label" for="radio_pmco2">CO<sub>2</sub> (ppm)</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input pollutant_radio" type="radio" name="radio_pullutant" id="radio_pullutant" value="voc">
+                                    <label class="form-check-label" for="radio_pmvoc">TVOC (µg/m<sup>3</sup>)</label>
+                                </div>
+                            </form>
+                            <!-- map legend-->
+                            <div class="map-legend" >
+                                <span class="indoor" style="width:40px; padding:10px;float:none;"> Indoor </span>
+                                <span class="outdoor" style="width:40px; padding:10px; "> outdoor </span>
                             </div>
                         </div>
-                        <!-- /# card -->
-                    </div>                  
-                    
+                    </div>
                 </div>
-                <!-- map -->
-
-                <!-- chart1 - line chart -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body" >
-
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-2" style="align-content: end; text-align: center;">
-                                        <input type="button" class="btn" id="btnduration1" name="btnduration" value="24 Hour">
-                                    </div>
-                                    <div class="col-lg-2 col-md-2" style="align-content: end; text-align: center;">
-                                        <input type="button" class="btn" id="btnduration2" name="btnduration" value="Week"   >
-                                    </div>
-                                    <div class="col-lg-2 col-md-2" style="align-content: end; text-align: center;">
-                                        <input type="button" class="btn" id="btnduration3" name="btnduration" value="Month"  >
-                                    </div>
-                                    <div class="col-lg-2 col-md-2" style="align-content: end; text-align: center;">
-                                        <input type="button" class="btn" id="btnduration4" name="btnduration" value="YTD"  >
-                                    </div>
-                                    <div class="col-lg-2 col-md-2">
-                                        <div class="row">
-                                            <label>Typology</label>
-                                        
-                                            <select id="typology" name="typology" class="selectpicker" multiple aria-label="typology" >
-                                                <option id="All" value="All" selected> All</option>
-                                            <?php
-                                                $curl = curl_init();
-
-                                                curl_setopt_array($curl, array(
-                                                CURLOPT_URL => $_SESSION['config']->api_host.'/api/dashboard/getTypology',
-                                                CURLOPT_RETURNTRANSFER => true,
-                                                CURLOPT_ENCODING => '',
-                                                CURLOPT_MAXREDIRS => 10,
-                                                CURLOPT_TIMEOUT => 0,
-                                                CURLOPT_FOLLOWLOCATION => true,
-                                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                                                CURLOPT_CUSTOMREQUEST => 'POST',
-                                                ));
-
-                                                $response = curl_exec($curl);
-
-                                                curl_close($curl);
-                                                $data = json_decode($response, true);
-                                                foreach ($data['Data'] as $typology){
-                                                    echo "<option>" . $typology . "</option>";
-                                                }
-                                                
-                                            ?>
-                                            </select>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="col-lg-2 col-md-2">
-                                        <div class="row">
-                                            
-                                            <label>Location</label>
-                                        
-                                            <select id="location" name="location" class="selectpicker location_select" multiple aria-label="location" style="width:auto">
-                                                <option id="All" value="All" selected> All</option>
-                                            <?php
-                                                $curl = curl_init();
-
-                                                curl_setopt_array($curl, array(
-                                                CURLOPT_URL => $_SESSION['config']->api_host.'/api/dashboard/getLocation',
-                                                CURLOPT_RETURNTRANSFER => true,
-                                                CURLOPT_ENCODING => '',
-                                                CURLOPT_MAXREDIRS => 10,
-                                                CURLOPT_TIMEOUT => 0,
-                                                CURLOPT_FOLLOWLOCATION => true,
-                                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                                                CURLOPT_CUSTOMREQUEST => 'POST',
-                                                ));
-
-                                                $response = curl_exec($curl);
-
-                                                curl_close($curl);
-                                                $data = json_decode($response, true);
-                                                foreach ($data['Data'] as $location){
-                                                    echo "<option>" . $location . "</option>";
-                                                }
-                                                
-                                            ?>
-                                            </select>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                    <div class="card-body" >
-                                        <input type="hidden" id="hid_duration" name="hid_duration" value="24hour">
-                                        <div id="linechart1" name="linechart1" style="position: relative; overflow:hidden; width: 100%; height:380px "></div>
-                                </div></div>
-                                </div>
-                                <div class="row">
-                                    <div style="margin-top:10px; margin-bottom:10px"> 
-                                        <form id="line_pollutant" name="line_pollutant"> 
-                                            <div class="form-check form-check-inline">
-                                                <label class="form-check-label" ><b>Pollutants:</b> </label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input pollutant_radio" type="radio" name="line_radio_pullutant" id="line_radio_pullutant" value="pm25" checked>
-                                                <label class="form-check-label" for="radio_pm25">PM 2.5 (µg/m<sup>3</sup>)</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input pollutant_radio" type="radio" name="line_radio_pullutant" id="line_radio_pullutant" value="pm10" >
-                                                <label class="form-check-label" for="radio_pm10">PM 10 (µg/m<sup>3</sup>)</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input pollutant_radio" type="radio" name="line_radio_pullutant" id="line_radio_pullutant" value="aqi">
-                                                <label class="form-check-label" for="radio_pm10">AQI</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input pollutant_radio" type="radio" name="line_radio_pullutant" id="line_radio_pullutant" value="co2">
-                                                <label class="form-check-label" for="radio_pmco2">CO<sub>2</sub> (ppm)</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input pollutant_radio" type="radio" name="line_radio_pullutant" id="line_radio_pullutant" value="voc">
-                                                <label class="form-check-label" for="radio_pmvoc">TVOC (µg/m<sup>3</sup>)</label>
-                                            </div>
-                                        </form>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /# card -->
-                    </div>                  
-                    
-                </div>
-                <!-- chart1 - line chart -->
-
-                
-                
-                
-            <!-- /#add-category -->
-            </div>
-            <!-- .animated -->
+                <!-- /# Map card -->
+            </div>                  
         </div>
+        <!-- /#map -->
+
+        <!-- chart1 - line chart -->
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- line chart card -->
+                <div class="card">
+                    <div class="card-body" >
+                        <!-- filter -->
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2" style="align-content: end; text-align: center;">
+                                <input type="button" class="btn" id="btnduration1" name="btnduration" value="24 Hour">
+                            </div>
+                            <div class="col-lg-2 col-md-2" style="align-content: end; text-align: center;">
+                                <input type="button" class="btn" id="btnduration2" name="btnduration" value="Week"   >
+                            </div>
+                            <div class="col-lg-2 col-md-2" style="align-content: end; text-align: center;">
+                                <input type="button" class="btn" id="btnduration3" name="btnduration" value="Month"  >
+                            </div>
+                            <div class="col-lg-2 col-md-2" style="align-content: end; text-align: center;">
+                                <input type="button" class="btn" id="btnduration4" name="btnduration" value="YTD"  >
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <div class="row">
+                                    <label>Typology</label>
+                                
+                                    <select id="typology" name="typology" class="selectpicker" multiple aria-label="typology" >
+                                        <option id="All" value="All" selected> All</option>
+                                    <?php
+                                        $curl = curl_init();
+
+                                        curl_setopt_array($curl, array(
+                                        CURLOPT_URL => $_SESSION['config']->api_host.'/api/dashboard/getTypology',
+                                        CURLOPT_RETURNTRANSFER => true,
+                                        CURLOPT_ENCODING => '',
+                                        CURLOPT_MAXREDIRS => 10,
+                                        CURLOPT_TIMEOUT => 0,
+                                        CURLOPT_FOLLOWLOCATION => true,
+                                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                        CURLOPT_CUSTOMREQUEST => 'POST',
+                                        ));
+
+                                        $response = curl_exec($curl);
+
+                                        curl_close($curl);
+                                        $data = json_decode($response, true);
+                                        foreach ($data['Data'] as $typology){
+                                            echo "<option>" . $typology . "</option>";
+                                        }
+                                        
+                                    ?>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <div class="row">
+                                    
+                                    <label>Location</label>
+                                
+                                    <select id="location" name="location" class="selectpicker location_select" multiple aria-label="location" style="width:auto">
+                                        <option id="All" value="All" selected> All</option>
+                                    <?php
+                                        $curl = curl_init();
+
+                                        curl_setopt_array($curl, array(
+                                        CURLOPT_URL => $_SESSION['config']->api_host.'/api/dashboard/getLocation',
+                                        CURLOPT_RETURNTRANSFER => true,
+                                        CURLOPT_ENCODING => '',
+                                        CURLOPT_MAXREDIRS => 10,
+                                        CURLOPT_TIMEOUT => 0,
+                                        CURLOPT_FOLLOWLOCATION => true,
+                                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                        CURLOPT_CUSTOMREQUEST => 'POST',
+                                        ));
+
+                                        $response = curl_exec($curl);
+
+                                        curl_close($curl);
+                                        $data = json_decode($response, true);
+                                        foreach ($data['Data'] as $location){
+                                            echo "<option>" . $location . "</option>";
+                                        }
+                                        
+                                    ?>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <!-- /# filter -->
+
+                        <!-- line chart --> 
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card-body" >
+                                    <input type="hidden" id="hid_duration" name="hid_duration" value="24hour">
+                                    <div id="linechart1" name="linechart1" style="position: relative; overflow:hidden; width: 100%; height:380px "></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /# line chart -->
+
+                        <!-- pollutant radio -->
+                        <div class="row">
+                            <div style="margin-top:10px; margin-bottom:10px"> 
+                                <form id="line_pollutant" name="line_pollutant"> 
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label" ><b>Pollutants:</b> </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input pollutant_radio" type="radio" name="line_radio_pullutant" id="line_radio_pullutant" value="pm25" checked>
+                                        <label class="form-check-label" for="radio_pm25">PM 2.5 (µg/m<sup>3</sup>)</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input pollutant_radio" type="radio" name="line_radio_pullutant" id="line_radio_pullutant" value="pm10" >
+                                        <label class="form-check-label" for="radio_pm10">PM 10 (µg/m<sup>3</sup>)</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input pollutant_radio" type="radio" name="line_radio_pullutant" id="line_radio_pullutant" value="aqi">
+                                        <label class="form-check-label" for="radio_pm10">AQI</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input pollutant_radio" type="radio" name="line_radio_pullutant" id="line_radio_pullutant" value="co2">
+                                        <label class="form-check-label" for="radio_pmco2">CO<sub>2</sub> (ppm)</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input pollutant_radio" type="radio" name="line_radio_pullutant" id="line_radio_pullutant" value="voc">
+                                        <label class="form-check-label" for="radio_pmvoc">TVOC (µg/m<sup>3</sup>)</label>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /# pollutant radio -->
+
+                    </div>
+                </div>
+                <!-- /# card -->
+            </div>                  
+        </div>
+        <!-- /#chart1 - line chart -->
+
+    </div>
+    <!-- .animated -->
+</div>
         
-        <!-- /.content -->
-        <div class="clearfix"></div>
-        <!-- Footer -->
-        <?php include 'partials/footer.php' ?>
-        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2jlT6C_to6X1mMvR9yRWeRvpIgTXgddM"></script>
+<!-- /.content -->
+<div class="clearfix"></div>
+<!-- Footer -->
+<?php include 'partials/footer.php' ?>
+
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2jlT6C_to6X1mMvR9yRWeRvpIgTXgddM"></script>
 
     <script src="assets/js/lib/gmap/gmaps.js"></script>
     <script src="assets/js/init/gmap-init.js"></script> -->
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
+    <!-- load pins on map script -->
     <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoiZGV2LW5pa3VuaiIsImEiOiJjbHMwYTNmdnowMDFxMmpyNTBteHoybTRwIn0.OEzenC6wBOTbqZXCUNoE7A';
         var map = new mapboxgl.Map({
@@ -301,14 +225,6 @@ max-width: 100%
         zoom: 10.5 // starting zoom //10
 
         });
-
-        /* var latitude = 77.7128; // New York City latitude
-        var longitude = 28.0060; // New York City longitude
-
-        // Create a marker on the map with the given latitude and longitude
-        new mapboxgl.Marker()
-            .setLngLat([longitude, latitude])
-            .addTo(map); */
 
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -475,9 +391,8 @@ max-width: 100%
 
     
     </script>
+    <!-- /# load pins on map script -->
 
-    
-    <!-- <script src="<?php //echo $_SESSION['config']->server_host?>/assets/chartJS/amchart.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js" integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -487,11 +402,11 @@ max-width: 100%
 
     <!-- for linechart  -->
     
-<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-<script src="<?php echo $_SESSION['config']->server_host?>/chart_JS_api/linechart1.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="<?php echo $_SESSION['config']->server_host?>/chart_JS_api/linechart1.js"></script>
 
     <script>
-        // updatechart function call
+        // script for updating line chart
         
         $(document).ready(function() {
             var post_url = '<?php echo $_SESSION['config']->server_host?>/chartData/linechart.php';
@@ -543,11 +458,8 @@ max-width: 100%
                 var typology = $('#typology').val();
                 var loc = $('#location').val();
                 pollutants = $('#line_radio_pullutant:checked').val();
-                //alert(pollutants);
                 getLinechart1(duration, typology, loc,pollutants, post_url);
 
             });
-            
-
         });
     </script>
