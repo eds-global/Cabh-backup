@@ -190,7 +190,7 @@ input.pollutant_radio{
     max-width: 100%
   }
   .indoor{
-    background-color: #023170;
+    background-color: #2fb996;
     color : #FFF;
     float: left;
     padding-left: 10px;
@@ -199,7 +199,7 @@ input.pollutant_radio{
     padding-top: 10px;
   }
   .outdoor{
-    background-color:red;
+    background-color:#f16463;
     color : #FFF;   
     height: 40px;
     padding-top: 10px;

@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-body" >
                         <!-- place map here-->
-                        <div id="map" style="position: relative; overflow:hidden; width: 100%; height:380px "></div>
+                        <div id="map" style="position: relative; overflow:hidden; width: 100%; height:470px "></div>
 
                         <div style="margin-top:10px; margin-bottom:10px"> 
                             <!-- pollutant radio-->
@@ -311,6 +311,176 @@
         </div>
         <!-- /#chart1 - line chart -->
 
+        <!-- chart2 - box plot chart -->
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- line chart card -->
+                <div class="card">
+                    <div class="card-body" >
+                        <!-- filter -->
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6" style="align-content: end; text-align: center;">
+                                <input type="button" class="btn" id="btnduration1_boxplot" name="btnduration_boxplot" value="24 Hour">
+                                <input type="button" class="btn" id="btnduration2_boxplot" name="btnduration_boxplot" value="Week"   >
+                                <input type="button" class="btn" id="btnduration3_boxplot" name="btnduration_boxplot" value="Month"  >
+                                <input type="button" class="btn" id="btnduration4_boxplot" name="btnduration_boxplot" value="YTD"  >
+                            </div>
+                            
+                            <div class="col-lg-2 col-md-2">
+                                <div class="row">
+                                    <label>Typology</label>
+                                
+                                    <select id="typology_boxplot" name="typology_boxplot" class="selectpicker" multiple aria-label="typology_boxplot" >
+                                        <option id="All" value="All" selected> All</option>
+                                        <?php
+                                            $curl = curl_init();
+
+                                            curl_setopt_array($curl, array(
+                                            CURLOPT_URL => $_SESSION['config']->api_host.'/api/dashboard/getTypology',
+                                            CURLOPT_RETURNTRANSFER => true,
+                                            CURLOPT_ENCODING => '',
+                                            CURLOPT_MAXREDIRS => 10,
+                                            CURLOPT_TIMEOUT => 0,
+                                            CURLOPT_FOLLOWLOCATION => true,
+                                            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                            CURLOPT_CUSTOMREQUEST => 'POST',
+                                            ));
+
+                                            $response = curl_exec($curl);
+
+                                            curl_close($curl);
+                                            $data = json_decode($response, true);
+                                            foreach ($data['Data'] as $typology){
+                                                echo "<option>" . $typology . "</option>";
+                                            }
+                                            
+                                        ?>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <div class="row">
+                                    
+                                    <label>Space Type</label>
+                                
+                                    <select id="spaceType_boxplot" name="spaceType_boxplot" class="selectpicker spaceType_select_boxplot" multiple aria-label="spaceType_boxplot" style="width:auto">
+                                        <option id="All" value="All" selected> All</option>
+                                        <?php
+                                            $curl = curl_init();
+
+                                            curl_setopt_array($curl, array(
+                                            CURLOPT_URL => $_SESSION['config']->api_host.'/api/dashboard/getSpaceType',
+                                            CURLOPT_RETURNTRANSFER => true,
+                                            CURLOPT_ENCODING => '',
+                                            CURLOPT_MAXREDIRS => 10,
+                                            CURLOPT_TIMEOUT => 0,
+                                            CURLOPT_FOLLOWLOCATION => true,
+                                            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                            CURLOPT_CUSTOMREQUEST => 'POST',
+                                            ));
+
+                                            $response = curl_exec($curl);
+
+                                            curl_close($curl);
+                                            $data = json_decode($response, true);
+                                            foreach ($data['Data'] as $spaceType){
+                                                echo "<option>" . $spaceType . "</option>";
+                                            }
+                                            
+                                        ?>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <div class="row">
+                                    
+                                    <label>Sensor ID</label>
+                                
+                                    <select id="sensorID_boxplot" name="sensorID_boxplot" class="selectpicker sensorID_select_boxplot" multiple aria-label="sensorID_boxplot" style="width:auto">
+                                        <option id="All" value="All" selected> All</option>
+                                        <?php
+                                            $curl = curl_init();
+
+                                            curl_setopt_array($curl, array(
+                                            CURLOPT_URL => $_SESSION['config']->api_host.'/api/dashboard/getSensorID',
+                                            CURLOPT_RETURNTRANSFER => true,
+                                            CURLOPT_ENCODING => '',
+                                            CURLOPT_MAXREDIRS => 10,
+                                            CURLOPT_TIMEOUT => 0,
+                                            CURLOPT_FOLLOWLOCATION => true,
+                                            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                            CURLOPT_CUSTOMREQUEST => 'POST',
+                                            ));
+
+                                            $response = curl_exec($curl);
+
+                                            curl_close($curl);
+                                            $data = json_decode($response, true);
+                                            foreach ($data['Data'] as $sensorID){
+                                                echo "<option>" . $sensorID . "</option>";
+                                            }
+                                            
+                                        ?>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                        </div>
+                       
+                        <!-- /# filter -->
+
+                        <!-- box chart --> 
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card-body" >
+                                    <input type="hidden" id="hid_duration_boxplot" name="hid_duration_boxplot" value="24hour">
+                                    <div id="boxchart1" name="boxchart1" style="position: relative; overflow:hidden; width: 100%; height:380px "></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /# box chart -->
+
+                        <!-- pollutant radio -->
+                        <div class="row">
+                            <div style="margin-top:10px; margin-bottom:10px"> 
+                                <form id="line_pollutant_boxplot" name="line_pollutant_boxplot"> 
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label" ><b>Pollutants:</b> </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input pollutant_radio" type="radio" name="box_radio_pullutant" id="box_radio_pullutant" value="pm25" checked>
+                                        <label class="form-check-label" for="radio_pm25">PM 2.5 (µg/m<sup>3</sup>)</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input pollutant_radio" type="radio" name="box_radio_pullutant" id="box_radio_pullutant" value="pm10" >
+                                        <label class="form-check-label" for="radio_pm10">PM 10 (µg/m<sup>3</sup>)</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input pollutant_radio" type="radio" name="box_radio_pullutant" id="box_radio_pullutant" value="aqi">
+                                        <label class="form-check-label" for="radio_pm10">AQI</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input pollutant_radio" type="radio" name="box_radio_pullutant" id="box_radio_pullutant" value="co2">
+                                        <label class="form-check-label" for="radio_pmco2">CO<sub>2</sub> (ppm)</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input pollutant_radio" type="radio" name="box_radio_pullutant" id="box_radio_pullutant" value="voc">
+                                        <label class="form-check-label" for="radio_pmvoc">TVOC (µg/m<sup>3</sup>)</label>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /# pollutant radio -->
+
+                    </div>
+                </div>
+                <!-- /# card -->
+            </div>                  
+        </div>
+        <!-- /#chart1 - line chart -->
+
     </div>
     <!-- .animated -->
 </div>
@@ -517,6 +687,7 @@
     
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
     <script src="<?php echo $_SESSION['config']->server_host?>/chart_JS_api/linechart1.js"></script>
+    <script src="<?php echo $_SESSION['config']->server_host?>/chart_JS_api/boxplot.js"></script>
 
     <script>
         // script for updating line chart
@@ -589,6 +760,82 @@
                 var sensorID = $('#sensorID').val();
                 pollutants = $('#line_radio_pullutant:checked').val();
                 getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
+
+            });
+        });
+    </script>
+
+<script>
+        // script for updating box chart
+        
+        $(document).ready(function() {
+            var post_url = '<?php echo $_SESSION['config']->server_host?>/chartData/boxplot.php';
+            var duration = $('#hid_duration_boxplot').val();
+            var typology = $('#typology_boxplot').val();
+            var spaceType = $('#spaceType_boxplot').val();
+            var sensorID = $('#sensorID_boxplot').val();
+            var pollutants = 'pm25';
+            getBoxplot(duration, typology,  spaceType, sensorID, pollutants, post_url);
+            $('#btnduration1_boxplot').click(function() {
+                var duration = '24hour'; 
+                var typology = $('#typology_boxplot').val();
+                var spaceType = $('#spaceType_boxplot').val();
+                var sensorID = $('#sensorID_boxplot').val();
+                $('#hid_duration_boxplot').val('24hour');
+                getBoxplot(duration, typology, spaceType, sensorID, pollutants,post_url);
+            });
+            $('#btnduration2_boxplot').click(function() {
+                var duration = 'week';  
+                var typology = $('#typology_boxplot').val();
+                var spaceType = $('#spaceType_boxplot').val();
+                var sensorID = $('#sensorID_boxplot').val();
+                $('#hid_duration_boxplot').val('week');
+                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            });
+            $('#btnduration3_boxplot').click(function() {
+                var duration = 'month'; 
+                var typology = $('#typology_boxplot').val();
+                var spaceType = $('#spaceType_boxplot').val();
+                var sensorID = $('#sensorID_boxplot').val();
+                $('#hid_duration_boxplot').val('month');
+                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            });
+            $('#btnduration4_boxplot').click(function() {
+                var duration = 'ytd';  
+                var typology = $('#typology_boxplot').val();
+                var spaceType = $('#spaceType_boxplot').val();
+                var sensorID = $('#sensorID_boxplot').val();
+                $('#hid_duration_boxplot').val('ytd');
+                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            });
+            $('#typology_boxplot').on('change', function() {
+                var duration = $('#hid_duration_boxplot').val();
+                var typology = $('#typology_boxplot').val();
+                var spaceType = $('#spaceType_boxplot').val();
+                var sensorID = $('#sensorID_boxplot').val();
+                getBoxplot(duration, typology, spaceType, sensorID,pollutants, post_url);
+            });
+            $('#spaceType_boxplot').on('change', function() {
+                var duration = $('#hid_duration_boxplot').val();
+                var typology = $('#typology_boxplot').val();
+                var spaceType = $('#spaceType_boxplot').val();
+                var sensorID = $('#sensorID_boxplot').val();
+                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            });
+            $('#sensorID_boxplot').on('change', function() {
+                var duration = $('#hid_duration_boxplot').val();
+                var typology = $('#typology_boxplot').val();
+                var spaceType = $('#spaceType_boxplot').val();
+                var sensorID = $('#sensorID_boxplot').val();
+                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            });
+            $('input[name=box_radio_pullutant]').change(function(){
+                var duration = $('#hid_duration_boxplot').val();
+                var typology = $('#typology_boxplot').val();
+                var spaceType = $('#spaceType_boxplot').val();
+                var sensorID = $('#sensorID_boxplot').val();
+                pollutants = $('#box_radio_pullutant:checked').val();
+                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url);
 
             });
         });

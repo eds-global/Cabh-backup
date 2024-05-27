@@ -142,7 +142,7 @@ var series = chart.series.push(am5xy.LineSeries.new(root, {
   name: "Indoor",
   xAxis: xAxis,
   yAxis: yAxis,
-  stroke: "#023170",
+  stroke: "#2fb996",
   valueYField: pollutants,
   valueXField: "datetime",
   tooltip: am5.Tooltip.new(root, {
@@ -187,7 +187,7 @@ legend.itemContainers.template.events.on("pointerover", function(e) {
     if (chartSeries != series) {
       chartSeries.strokes.template.setAll({
         strokeOpacity: 0.15,
-        stroke: "#023170",
+        stroke: "#2fb996",
       });
     } else {
       chartSeries.strokes.template.setAll({
@@ -206,7 +206,7 @@ legend.itemContainers.template.events.on("pointerout", function(e) {
     chartSeries.strokes.template.setAll({
       strokeOpacity: 1,
       strokeWidth: 1,
-      stroke: "#023170"
+      stroke: "#2fb996"
     });
   });
 })
