@@ -367,12 +367,6 @@
 
     function getBoxPlotIndoorData(){
         $conn = db_connect();
-
-        $indoorQueryStatus = 'n';
-        $outdoorQueryStatus = 'n';
-        $indoorData = null;
-        $outdoorData = null;
-
         //set default parameters
         $duration = '24hour';
         $typology = 'All';
@@ -492,115 +486,45 @@
             if ($result->num_rows > 0) {
                 
                 $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                $indoorQueryStatus = 'y';
-                $indoorData = $rows;
                 return  json_encode ( [ 'ApiResponse' => 'Success', 'RowCount' => $result->num_rows, 'Query' => $select_query ,'Data' => $rows ] );
             } else {
-                $indoorQueryStatus = 'y';
                 return json_encode ( [ 'ApiResponse' => 'Success', 'RowCount' => $result->num_rows, 'Message' => "No records found" , 'query' => $select_query]);
             }
 
         }
         catch(Exception $e){
-            $indoorQueryStatus = 'n';
             return json_encode ( [ 'ApiResponse' => 'Fail',  'Message' => $e.getMessage()]);
         }
     }
 
-    function getBoxPlotOutdoorData(){
-        //outdoor data
-        $conn = db_connect();
-
-        //set default parameters
-        $duration = '24hour';
-        $typology = 'All';
-        $pollutant = "pm25";
-        $typology_filter = 'n';
-        //get input from api call
-        if(file_get_contents('php://input')){
-            $json = file_get_contents('php://input'); 
-            $data = json_decode($json,true);
-            $duration = $data["duration"];
-            $typology = $data["typology"];
-            $pollutant = $data["pollutant"];
-                   
-        }
-        //convert duration to start and end date
-        $start_dt = new DateTime();
-        $end_dt = new DateTime();
-        if($duration == 'week'){
-            //set duration for week
-            $start_dt->modify("-7 day")->format('Y-m-d H:i:s');
-            $end_dt = $end_dt->format('Y-m-d H:i:s');
-            $start_dt = $start_dt->format('Y-m-d H:i:s');
-
-            $dt = $start_dt  . " - " . $end_dt ;
-
-        }else if($duration == 'month'){
-            //set duration for month
-            $start_dt->modify("-1 month")->format('Y-m-d H:i:s');
-            $end_dt = $end_dt->format('Y-m-d H:i:s');
-            $start_dt = $start_dt->format('Y-m-d H:i:s');
-
-            $dt = $start_dt  . " - " . $end_dt ;
-
-        }else if($duration == 'ytd'){
-            //set duration for ytd
-            $start_dt = '2024-01-01 00:00:00';
-            $end_dt = $end_dt->format('Y-m-d H:i:s');
-            //$start_dt = $start_dt->format('Y-m-d H:i:s');
-
-            $dt = $start_dt . " - " . $end_dt ;
-        }else{
-            //set duration for 24 hour
-            $start_dt->modify("-24 hour")->format('Y-m-d H:i:s');
-            $end_dt = $end_dt->format('Y-m-d H:i:s');
-            $start_dt = $start_dt->format('Y-m-d H:i:s');
-            $dt = $start_dt  . " - " . $end_dt ;
-        }
-        //get typology 
-        if(strpos($typology, 'All') === false){
-            $typology_filter = "y";
-        } 
-        $typology  =  "'" . str_replace(",","','", $typology ) . "'";
-
-        
-            $select_query = "SELECT e.datetime as date_time1, min(abs(e.$pollutant)) as min_reading, max(abs(e.$pollutant)) as max_reading, avg(abs(e.$pollutant)) as avg_reading,
-                        min(abs(e.temp)) as min_temp, max(abs(e.temp)) as max_temp, min(abs(e.humidity)) as min_humidity, max(abs(e.humidity)) as max_humidity
-                        From device_details a JOIN cpcb_monitors b ON a.outdoor_deviceID = b.deviceID
-                           LEFT OUTER JOIN cpcb_data e 
-                        ON (b.deviceID = e.deviceID) 
-                        where (datetime between '$start_dt' and '$end_dt') ";
-            
-            if($typology_filter == 'y'){
-                $select_query .=  "  and typology in ($typology) ";
-            }
-            
-            $select_query .=  " group by datetime order by datetime ";
-            //return  json_encode ( [ 'ApiResponse' => 'Success', 'RowCount' => '10', 'Query' => $select_query  ] );
-
-            try{        
-                $result = $conn->query($select_query);
-                
-                if ($result->num_rows > 0) {
-                    
-                    $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                    return  json_encode ( [ 'ApiResponse' => 'Success', 'RowCount' => $result->num_rows, 'Query' => $select_query ,'Data' => $rows ] );
-                } else {
-                    return json_encode ( [ 'ApiResponse' => 'Success', 'RowCount' => $result->num_rows, 'Message' => "No records found" , 'query' => $select_query]);
-                }
-
-            }
-            catch(Exception $e){
-                return json_encode ( [ 'ApiResponse' => 'Fail',  'Message' => $e.getMessage()]);
-            }
-        
-    }
 
 
 
 
 
+   /*  SELECT e.datetime as date_time1, min(abs(e.max_pm25)) as min_reading, max(abs(e.max_pm25)) as max_reading, avg(abs(e.max_pm25)) as avg_reading, substring_index(substring_index(group_concat(cast(abs(e.max_pm25) as decimal(10,2) ) order by abs(e.max_pm25) ASC separator ','
+                ),',',((0.25 * count(*)))         
+                    ),',',-(1)
+            ) AS `Q1`,
+            substring_index(
+            substring_index(
+                group_concat(cast(abs(e.max_pm25) as decimal(10,2) )
+                            order by abs(e.max_pm25)
+                            ASC separator ','
+                ),',',((0.50 * count(*)))         
+                        ),',',-(1)
+            ) AS `median`,
+            substring_index(
+            substring_index(
+                group_concat(cast(abs(e.max_pm25) as decimal(10,2) )
+                            order by abs(e.max_pm25)
+                            ASC separator ','
+                ),',',((0.75 * count(*)) )         
+                        ),',',-(1)
+            ) AS `Q3`,
 
-  
+            sum(abs(e.max_pm25)) as cumulative_reading
+                 FROM device_details a   LEFT OUTER JOIN reading_15min e 
+                 ON (a.deviceID = e.deviceID) 
+         group by datetime order by datetime */
 ?>

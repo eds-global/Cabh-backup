@@ -73,8 +73,8 @@
         <div class="animated fadeIn">
             <div class="row justify-content-center"> <!-- Centering the content -->
                 <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <h4 class="heading-about" style="font-weight: 600;"> ABOUT CABH </h4>
+                    <div class="section-heading col-lg-12 text-center">
+                        <h2> ABOUT CABH </h2> 
                     </div>
                 </div>
                 <!-- <div style="background-color: #f2f2f2; padding: 18px;"> -->
