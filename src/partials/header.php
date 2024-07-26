@@ -80,49 +80,7 @@
     
     <!-- Right Panel -->
     <div id="right-panel" class="right-panel" style="margin-left:0!important">
-        <header id="header"  class="header">
-            <div class="top-left">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><img src="<?php echo $_SESSION['config']->server_host?>/images/usaid.png" alt="Logo"></a>
-                    </div>
-            </div>
-            <div class="top-right">
-                <!-- <div class="header-menu"> -->
-                    <div class="header-left" >
-                    <div class="navbar-header text-right" >
-                    <a class="navbar-brand" href="./" style="width:120px; margin-right:0;"><img src="<?php echo $_SESSION['config']->server_host?>/images/EDSlogo.png" alt="Logo" style="max-width:120px; margin-right:0;max-height:53px;    margin-top: 5px;"></style></a>
-                    <a class="navbar-brand" href="./" style="width:120px; margin-right:0;"><img src="<?php echo $_SESSION['config']->server_host?>/images/ceew.png" alt="Logo" style="max-width:130px; margin-right:0;max-height:45px;    margin-top: 5px;"></a>
-                        
-                <!-- </div> -->
-                    
-
-                       
-
-                       
-                    </div>
-
-                    
-
-                </div>
-            </div>
-        </header>
-        <!-- for mobile -->
-        <header id="header-row" class="header hidden">
-            <div class="row">
-                <div class="col-lg-12" style="display:flex">
-                    <img src="<?php echo $_SESSION['config']->server_host?>/images/usaid.png" alt="Logo"  style="max-width:30%; margin-right:5px; float:left" class="text-left">
-                    <center>
-                    <img src="<?php echo $_SESSION['config']->server_host?>/images/EDSlogo.png" alt="Logo" style="max-width:40%; margin-right:auto; margin-left:25%; float:left" class="text-center">
-    </center>
-                    <img src="<?php echo $_SESSION['config']->server_host?>/images/ceew.png" alt="Logo" style="max-width:20%; margin-right:5px; float:right" class="text-right">
-              
-                </div>
-               
-            </div>
-            
-            
-        </header>
-        <!-- mobile row finish -->
+        
         <header id="header1" class="header bg-green">
             <div class="top-left">
                 <div class="navbar-header">
@@ -137,31 +95,32 @@
 
                        <ul class="nav navbar-nav ml-auto " style="flex-direction: row;">
                         
-                        <li class="nav-item ">
+                        <!-- <li class="nav-item ">
                             <a href="/home" class="nav-link" id="nav_home">Home</a>
-                        </li>
+                        </li> -->
                         <li class="nav-item ">
                             <a href="/dashboard" class="nav-link" id="nav_dashboard">Dashboard</a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="/breathein" class="nav-link" id="nav_breath">Breathe-in</a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a href="/dialog" class="nav-link" id="nav_dialog">Dialogues</a>
                         </li>
                         <li class="nav-item">
                             <a href="/about-cabh" class="nav-link" id="nav_about">About <b>CABH</b></a>
                         </li>
-                        <li class="nav-item">
-                            <a href="/dialog" class="nav-link" id="nav_dialog">Dialogs</a>
-                        </li>
-                        <?php 
-                            if($_SESSION['config']->user == "public"){
-                                ?>
-                                <li class="nav-item">
-                                    <a href="/login" class="nav-link" id="nav_login">Login</a>
-                                </li>
-                                <?php
-                            }
                         
-                        ?>
+                        <!-- <?php 
+                            // if($_SESSION['config']->user == "public"){
+                            //     ?>
+                            //     <li class="nav-item">
+                            //         <a href="/login" class="nav-link" id="nav_login">Login</a>
+                            //     </li>
+                            //     <?php
+                            // }
+                        
+                        ?> -->
                        </ul>
 
                       

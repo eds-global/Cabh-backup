@@ -10,7 +10,7 @@
     <div class="animated fadeIn">
         
         <!-- map -->
-        <div class="row">
+        <div class="row" id="map_row">
             <div class="col-lg-12">
                 <!-- Map card -->
                 <div class="card">
@@ -21,7 +21,18 @@
                             <div class="col-lg-9">
                                 <h4 class="dashboard_title text-center">Map</h4>
                                 <div id="map" style="position: relative; overflow:hidden; width:100%; height:470px "></div>
-                                <span class="note"><b>Note: </b> map pin showing max value of selected pollutants for last hour</span>
+                                <!--map pin showing average value of selected pollutants (median) for last hour -->
+                                <?php
+                                    date_default_timezone_set('Asia/Kolkata');
+                                    $current_dt = new DateTime();
+                                    $start_dt = clone $current_dt;
+                                    $start_dt->modify('-1 hour');
+                                    // Format datetimes as strings (optional)
+                                    $current_dt_string = $current_dt->format('Y-m-d H:00:00');
+                                    $start_dt_string = $start_dt->format('Y-m-d H:00:00');
+                                    $note_msg = "map pin showing average value of selected pollutants for $start_dt_string - $current_dt_string"
+                                ?>
+                                <span class="note"><b>Note: </b> <?php echo $note_msg; ?> </span>
                             </div>
                             <div class="col-lg-3">
                                 <!-- Pollutants-->
@@ -45,9 +56,15 @@
                                 <div class="row text-center " style="margin-top:10px; margin-bottom:10px; "> 
                                     <div class="card">
                                         <div class="card-body map-card">
-                                            <span id="monitor_count">0</span> monitors
+                                            <span id="monitor_count">0</span> 
+                                            <input type="hidden" id="map_active_deviceID" name="map_active_deviceID" value="none">  
+                                            <input type="hidden" id="map_total_device_count" name="map_total_device_count" value="none">  
+                                    
                                         </div>
+
                                     </div>
+                                    <button type="button" class="btn active hide_element" id="btn_active_sensor" name="btn_active_sensor" style="width:auto; "  >Active Device Data</button>
+
                                 </div>
 
                                 <!-- map legend-->
@@ -88,8 +105,9 @@
                                             </div>
                                             <input type="hidden" id="hid_duration_R_boxplot" name="hid_duration_R_boxplot" value="24hour">
                                             <input type="hidden" id="hid_pollutants_R_boxplot" name="hid_pollutants_R_boxplot" value="aqi">
+                                            <input type="hidden" id="hid_indoorConditon_R_boxplot" name="hid_indoorConditon_R_boxplot" value="none">
                                             <div id="boxchart1" name="boxchart1" style="position: relative; overflow:hidden; width: 100%; height:380px "></div>
-                                            <span class="note"><b>Note: </b>Chart showing box plot data for indoor sensor of Residential typology</span>
+                                            <!-- <span class="note"><b>Note: </b>Chart showing box plot data for indoor sensor of Residential typology</span> -->
                             
                                         </div>
                                     </div>
@@ -98,13 +116,22 @@
                             </div>
                             <div class="col-lg-3">
                                 <!-- Pollutants-->
-                                <div class="row text-center " style="margin-top:10px; margin-bottom:10px; display:block"> 
-                                    <h4>Pollutants:</h4>
+                                <div class="row text-center " style="margin-top:10px; margin-bottom:10px; display:block text-align: left"> 
+                                    <h4>Select pollutant</h4>
                                     <button type="button" class="btn active" id="btnaqi_R_box" name="btnaqi_R_box" >AQI</button>
                                     <button type="button" class="btn" id="btnpm25_R_box" name="btnpm25_R_box" >PM<sub>2.5</sub></button>
                                     <button type="button" class="btn" id="btnpm10_R_box" name="btnpm10_R_box" >PM<sub>10</sub> </button>
                                     <button type="button" class="btn" id="btnco2_R_box" name="btnco2_R_box">CO<sub>2</sub></button>
                                     <button type="button" class="btn" id="btntvoc_R_box" name="btntvoc_R_box"  >TVOC</button>
+                                </div>
+
+                                <!-- Indoor context-->
+                                <div class="row text-center " style="margin-top:15px; margin-bottom:10px; display:block text-align: left"> 
+                                    <h4>Toggle Indoor Conditions</h4>
+                                    <button type="button" class="btn" id="btnWTemp_R_box" name="btnWTemp_R_box" >Temp</button>
+                                    <button type="button" class="btn" id="btnWRH_R_box" name="btnWRH_R_box" >RH</button><br>
+                                    <!-- <span class="note"><b>*Note: </b>With Temperature & RH chart will show only indoor data</span> -->
+
                                 </div>
                             </div>
                         </div>
@@ -130,14 +157,17 @@
                                         <div class="card-body" >
                                             <h4 class="dashboard_title text-center">Plot for Office Typology</h4>
                                             <div class="col-lg-6 col-md-6" style="align-content: end; text-align: center;">
-                                                <input type="button" class="btn btn_duration" id="btnduration1d_O_boxplot" name="btnduration1d_O_boxplot" value="1d">
+                                                <input type="button" class="btn btn_duration active" id="btnduration1d_O_boxplot" name="btnduration1d_O_boxplot" value="1d">
                                                 <input type="button" class="btn btn_duration" id="btnduration7d_O_boxplot" name="btnduration7d_O_boxplot" value="7d"   >
                                                 <input type="button" class="btn btn_duration" id="btnduration30d_O_boxplot" name="btnduration30d_O_boxplot" value="30d"  >
                                                 <input type="button" class="btn btn_duration" id="btndurationAll_O_boxplot" name="btndurationAll_O_boxplot" value="All"  >
                                             </div>
-                                            <input type="hidden" id="hid_duration_boxplot_office" name="hid_duration_boxplot_office" value="24hour">
+                                            <input type="hidden" id="hid_duration_O_boxplot" name="hid_duration_O_boxplot" value="24hour">
+                                            <input type="hidden" id="hid_pollutants_O_boxplot" name="hid_pollutants_O_boxplot" value="aqi">
+                                            <input type="hidden" id="hid_indoorConditon_O_boxplot" name="hid_indoorConditon_O_boxplot" value="none">
+                                            
                                             <div id="boxchart1_office" name="boxchart1_office" style="position: relative; overflow:hidden; width: 100%; height:380px "></div>
-                                            <span class="note"><b>Note: </b>Chart showing box plot data for indoor sensor of Office typology</span>
+                                            <!-- <span class="note"><b>Note: </b>Chart showing box plot data for indoor sensor of Office typology</span> -->
                             
                                         </div>
                                     </div>
@@ -146,13 +176,22 @@
                             </div>
                             <div class="col-lg-3">
                                 <!-- Pollutants-->
-                                <div class="row text-center " style="margin-top:10px; margin-bottom:10px; display:block"> 
-                                    <h4>Pollutants:</h4>
-                                    <button type="button" class="btn" id="btnpm25_O_box" name="btnpm25_O_box" >PM<sub>2.5</sub> (µg/m<sup>3</sup>)</button>
-                                    <button type="button" class="btn" id="btnpm10_O_box" name="btnpm10_O_box" >PM 10 (µg/m<sup>3</sup>)</button>
-                                    <button type="button" class="btn" id="btnaqi_O_box" name="btnaqi_O_box" >AQI</button>
-                                    <button type="button" class="btn" id="btnco2_O_box" name="btnco2_O_box">CO<sub>2</sub> (ppm)</button>
-                                    <button type="button" class="btn" id="btntvoc_O_box" name="btntvoc_O_box"  >TVOC (µg/m<sup>3</sup>)</button>
+                                <div class="row text-center " style="margin-top:10px; margin-bottom:10px; display:block text-align: left"> 
+                                    <h4>Select pollutant</h4>
+                                    <button type="button" class="btn active" id="btnaqi_O_box" name="btnaqi_O_box" >AQI</button>
+                                    <button type="button" class="btn" id="btnpm25_O_box" name="btnpm25_O_box" >PM<sub>2.5</sub> </button>
+                                    <button type="button" class="btn" id="btnpm10_O_box" name="btnpm10_O_box" >PM<sub>10</sub> </button>
+                                    <button type="button" class="btn" id="btnco2_O_box" name="btnco2_O_box">CO<sub>2</sub></button>
+                                    <button type="button" class="btn" id="btntvoc_O_box" name="btntvoc_O_box"  >TVOC</button>
+                                </div>
+
+                                <!-- Indoor context-->
+                                <div class="row text-center " style="margin-top:15px; margin-bottom:10px; display:block text-align: left"> 
+                                    <h4>Toggle Indoor Conditions</h4>
+                                    <button type="button" class="btn" id="btnWTemp_O_box" name="btnWTemp_O_box" >Temp</button>
+                                    <button type="button" class="btn" id="btnWRH_O_box" name="btnWRH_O_box" >RH</button><br>
+                                    <!-- <span class="note"><b>*Note: </b>With Temperature & RH chart will show only indoor data</span> -->
+
                                 </div>
                             </div>                     
                         </div>
@@ -164,7 +203,7 @@
         <!-- /#chart1 - box plot chart (Office typology)-->
 
         <!-- chart1 - line chart for single sensor-->
-        <div class="row">
+        <div class="row hide_element" id="single_sensor_row">
             <div class="col-lg-12">
                 <!-- line chart card -->
                 <div class="card">
@@ -178,14 +217,15 @@
                                         <div class="card-body" >
                                             <h4 class="dashboard_title text-center">Plot for Single Sensor</h4>
                                             <div class="col-lg-6 col-md-6" style="align-content: end; text-align: center;">
-                                                <input type="button" class="btn btn_duration" id="btnduration1d_O_sensor" name="btnduration1d_O_sensor" value="1d">
-                                                <input type="button" class="btn btn_duration" id="btnduration7d_O_sensor" name="btnduration7d_O_sensor" value="7d"   >
-                                                <input type="button" class="btn btn_duration" id="btnduration30d_O_sensor" name="btnduration30d_O_sensor" value="30d"  >
-                                                <input type="button" class="btn btn_duration" id="btndurationAll_O_sensor" name="btndurationAll_O_sensor" value="All"  >
+                                                <input type="button" class="btn btn_duration active" id="btnduration1d_S_sensor" name="btnduration1d_S_sensor" value="1d">
+                                                <input type="button" class="btn btn_duration" id="btnduration7d_S_sensor" name="btnduration7d_S_sensor" value="7d"   >
+                                                <input type="button" class="btn btn_duration" id="btnduration30d_S_sensor" name="btnduration30d_S_sensor" value="30d"  >
+                                                <input type="button" class="btn btn_duration" id="btndurationAll_S_sensor" name="btndurationAll_S_sensor" value="All"  >
                                             </div>
-                                            <input type="hidden" id="hid_duration" name="hid_duration" value="24hour">
+                                            <input type="hidden" id="hid_duration_S_sensor" name="hid_duration_S_sensor" value="24hour">
+                                            <input type="hidden" id="hid_pollutants_S_sensor" name="hid_pollutants_S_sensor" value="aqi">
                                             <div id="linechart1" name="linechart1" style="position: relative; overflow:hidden; width: 100%; height:380px "></div>
-                                            <span class="note"><b>Note: </b>Chart showing line plot for indoor sensor of '1202240025' device</span>
+                                            <span class="note"><b>Note: </b>Chart showing line plot for indoor sensor of <span id="active_sensor">'1202240025'</span> device</span>
                             
                                         </div>
                                     </div>
@@ -195,14 +235,17 @@
                             </div>
                             <div class="col-lg-3">
                                 <!-- Pollutants-->
-                                <div class="row text-center " style="margin-top:10px; margin-bottom:10px; display:block"> 
+                                <div class="row text-center " style="margin-top:10px; margin-bottom:10px; display:block text-align: left"> 
                                     <h4>Pollutants:</h4>
-                                    <button type="button" class="btn" id="btnpm25_sensor" name="btnpm25_O_box" >PM<sub>2.5</sub> (µg/m<sup>3</sup>)</button>
-                                    <button type="button" class="btn" id="btnpm10_sensor" name="btnpm10_sensor" >PM 10 (µg/m<sup>3</sup>)</button>
-                                    <button type="button" class="btn" id="btnaqi_sensor" name="btnaqi_sensor" >AQI</button>
-                                    <button type="button" class="btn" id="btnco2_sensor" name="btnco2_sensor">CO<sub>2</sub> (ppm)</button>
-                                    <button type="button" class="btn" id="btntvoc_sensor" name="btntvoc_sensor"  >TVOC (µg/m<sup>3</sup>)</button>
+                                    <button type="button" class="btn active" id="btnaqi_sensor" name="btnaqi_sensor" >AQI</button>
+                                    <button type="button" class="btn" id="btnpm25_sensor" name="btnpm25_sensor" >PM<sub>2.5</sub> </button>
+                                    <button type="button" class="btn" id="btnpm10_sensor" name="btnpm10_sensor" >PM<sub>10</sub> </button>
+                                    <button type="button" class="btn" id="btnco2_sensor" name="btnco2_sensor">CO<sub>2</sub> </button>
+                                    <button type="button" class="btn" id="btntvoc_sensor" name="btntvoc_sensor"  >TVOC</button>
                                 </div>
+
+                                <button type="button" class="btn active" id="btnback2map" name="btnback2map" style="width:auto" >Back to map</button>
+
                             </div>                           
                             
                         </div>
@@ -237,17 +280,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js" integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
     <!-- load pins on map script -->
+    <!-- the map is showing pins with avg median value for indoor pollutant and avg of outdoor pollutant for last hour data -->
+
+    
     <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoiZGV2LW5pa3VuaiIsImEiOiJjbHMwYTNmdnowMDFxMmpyNTBteHoybTRwIn0.OEzenC6wBOTbqZXCUNoE7A';
         var map = new mapboxgl.Map({
         container: 'map', // container ID
         style: 'mapbox://styles/mapbox/light-v11',
-        center: [77.2, 28.55], // starting position [lng, lat] [77.2, 28.58]
-        scrollZoom: false, // Disable scroll zoom
-        dragPan: false, // Disable drag pan
-        zoom: 10.5 // starting zoom //10
+        //style: 'mapbox://styles/mapbox/satellite-v9',
+        center: [0,0], // starting position [lng, lat] [77.2, 28.58]
+        scrollZoom: true, // Disable scroll zoom
+        dragPan: true, // Disable drag pan
+        zoom: 1 // starting zoom //10
 
         });
+        map.on('load', function() {
+        map.flyTo({
+            center: [77.2, 28.53], // Center the map on the globe (longitude 0, latitude 0)
+            zoom: 10.6, // Zoom out to see the globe (adjust as needed)
+            speed: 0.6, // Control the speed of the animation
+            curve: 3, // Use easing to make the animation smooth
+            //bearing: 90,
+            easing: function(t) {
+                return t;
+            }
+            //bearing: 90
+        });
+         });
+
 
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -271,7 +332,8 @@
         .then(data => {
             console.log(data.Data)
             total_pin = data.RowCount;
-            $('#monitor_count').text(total_pin);
+            $('#monitor_count').text(total_pin + " monitors");
+            $('#map_total_device_count').val(total_pin);
             if (!Array.isArray(data.Data)) {
                 throw new Error('Data is not an array');
             }
@@ -282,14 +344,15 @@
             console.log(markerData.longitude+" " + markerData.latitude)
             var el = document.createElement('div');
             el.className = 'marker'; //'marker';
+            el.id=markerData.deviceID;
 
             var el_1 = document.createElement('div');
             el_1.className = 'indoor'; //'marker';
-            el_1.textContent = markerData.max_pm25;
+            el_1.textContent = markerData.indoor_aqi;
 
             var el_2 = document.createElement('div');
             el_2.className = 'outdoor'; //'marker';
-            el_2.textContent = markerData.outdoor_pm25;
+            el_2.textContent = markerData.outdoor_aqi;
 
             el.appendChild(el_1);
             el.appendChild(el_2);
@@ -301,9 +364,24 @@
                 .setLngLat([parseFloat(markerData.longitude), parseFloat(markerData.latitude)])
                 //.setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
                 //.setHTML('<p><b>Indoor(PM2.5) :</b><br> ' + markerData.max_pm25  + '</p>'))
-                .addTo(map);
+                .addTo(map); 
+                
+                
+            event_id = "#"+ (markerData.deviceID) ; 
+            //alert(event_id);
+            $(event_id).click(function(){
+                $(this).css("z-index", 99 );
+                span_text = "AQI: " + markerData.indoor_aqi + " | PM2.5: " + markerData.indoor_pm25 + " | PM10: " +  markerData.indoor_pm10 + " | CO2: " + markerData.indoor_co2 + " | TVOC: " + markerData.indoor_voc
+                $('#monitor_count').text(span_text);
+                $('#map_active_deviceID').val(markerData.deviceID);
+                $('#btn_active_sensor').removeClass('hide_element');
+                $('#single_sensor_row').removeClass('hide_element');
                 
             });
+            });
+
+            
+            
             
         })
         .catch(error => {
@@ -351,6 +429,8 @@
             $('#btnco2_map').removeClass('active')
             updateMap("voc");
         });
+
+        
         
 
         //typology button click redirect
@@ -375,7 +455,7 @@
                 if(pollutant == "pm25"){
                     var el_1 = document.createElement('div');
                     el_1.className = 'indoor'; //'marker';
-                    el_1.textContent = markerData.max_pm25;
+                    el_1.textContent = markerData.indoor_pm25;
 
                     var el_2 = document.createElement('div');
                     el_2.className = 'outdoor'; //'marker';
@@ -394,7 +474,7 @@
                 if(pollutant == "pm10"){
                     var el_1 = document.createElement('div');
                     el_1.className = 'indoor'; //'marker';
-                    el_1.textContent = markerData.max_pm10;
+                    el_1.textContent = markerData.indoor_pm10;
 
                     var el_2 = document.createElement('div');
                     el_2.className = 'outdoor'; //'marker';
@@ -413,7 +493,7 @@
                 if(pollutant == "aqi"){
                     var el_1 = document.createElement('div');
                     el_1.className = 'indoor'; //'marker';
-                    el_1.textContent = markerData.max_aqi;
+                    el_1.textContent = markerData.indoor_aqi;
 
                     var el_2 = document.createElement('div');
                     el_2.className = 'outdoor'; //'marker';
@@ -431,7 +511,7 @@
                 }
                 if(pollutant == "co2"){
 
-                    el.textContent = markerData.max_co2;
+                    el.textContent = markerData.indoor_co2;
                     el.style.width= "40px";
                     el.style.padding= "10px 0 0 0";
                     new mapboxgl.Marker(el)
@@ -441,7 +521,7 @@
                         .addTo(map);
                 }
                 if(pollutant == "voc"){
-                    el.textContent = markerData.max_voc;
+                    el.textContent = markerData.indoor_voc;
                     el.style.width= "40px";
                     el.style.padding= "10px 0 0 0";
 
@@ -494,73 +574,164 @@
         
         $(document).ready(function() {
             var post_url = '<?php echo $_SESSION['config']->server_host?>/chartData/linechart.php';
-            var duration = $('#hid_duration').val();
+            var duration = $('#hid_duration_S_sensor').val();
             var typology = ['All']; //$('#typology').val();
             var spaceType = ['All']; //$('#spaceType').val();
             var sensorID = ['1202240025'];//$('#sensorID').val();
-            var pollutants = 'pm25';
+            var pollutants = $('#hid_pollutants_S_sensor').val();
             getLinechart1(duration, typology,  spaceType, sensorID, pollutants, post_url);
-            $('#btnduration1').click(function() {
-                var duration = '24hour'; 
-                var typology = $('#typology').val();
-                var spaceType = $('#spaceType').val();
-                var sensorID = $('#sensorID').val();
-                $('#hid_duration').val('24hour');
+
+            $('#btn_active_sensor').click(function() {
+                document.getElementById('single_sensor_row').scrollIntoView();
+                var pollutants = $('#hid_pollutants_S_sensor').val();
+                var duration =  $('#hid_duration_S_sensor').val();
+                var typology = ['All'];
+                var spaceType = ['All']; 
+                var sensorID =[$('#map_active_deviceID').val()];// ['1202240025'];
+                $('#active_sensor').text(sensorID); 
                 getLinechart1(duration, typology, spaceType, sensorID, pollutants,post_url);
             });
-            $('#btnduration2').click(function() {
-                var duration = 'week';  
-                var typology = $('#typology').val();
-                var spaceType = $('#spaceType').val();
-                var sensorID = $('#sensorID').val();
-                $('#hid_duration').val('week');
-                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
-            });
-            $('#btnduration3').click(function() {
-                var duration = 'month'; 
-                var typology = $('#typology').val();
-                var spaceType = $('#spaceType').val();
-                var sensorID = $('#sensorID').val();
-                $('#hid_duration').val('month');
-                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
-            });
-            $('#btnduration4').click(function() {
-                var duration = 'ytd';  
-                var typology = $('#typology').val();
-                var spaceType = $('#spaceType').val();
-                var sensorID = $('#sensorID').val();
-                $('#hid_duration').val('ytd');
-                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
-            });
-            $('#typology').on('change', function() {
-                var duration = $('#hid_duration').val();
-                var typology = $('#typology').val();
-                var spaceType = $('#spaceType').val();
-                var sensorID = $('#sensorID').val();
-                getLinechart1(duration, typology, spaceType, sensorID,pollutants, post_url);
-            });
-            $('#spaceType').on('change', function() {
-                var duration = $('#hid_duration').val();
-                var typology = $('#typology').val();
-                var spaceType = $('#spaceType').val();
-                var sensorID = $('#sensorID').val();
-                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
-            });
-            $('#sensorID').on('change', function() {
-                var duration = $('#hid_duration').val();
-                var typology = $('#typology').val();
-                var spaceType = $('#spaceType').val();
-                var sensorID = $('#sensorID').val();
-                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
-            });
-            $('input[name=line_radio_pullutant]').change(function(){
-                var duration = $('#hid_duration').val();
-                var typology = $('#typology').val();
-                var spaceType = $('#spaceType').val();
-                var sensorID = $('#sensorID').val();
-                pollutants = $('#line_radio_pullutant:checked').val();
-                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
 
+            $('#btnduration1d_S_sensor').click(function() {
+                $(this).addClass('active');
+                $('#btnduration7d_S_sensor').removeClass('active')
+                $('#btnduration30d_S_sensor').removeClass('active')
+                $('#btndurationAll_S_sensor').removeClass('active')
+                var pollutants = $('#hid_pollutants_S_sensor').val();
+                var duration =  '24hour';
+                var typology = ['All'];
+                var spaceType = ['All']; 
+                var sensorID =[$('#map_active_deviceID').val()];// ['1202240025']; 
+                $('#hid_duration_S_sensor').val('24hour');
+                $('#active_sensor').text(sensorID); 
+                getLinechart1(duration, typology, spaceType, sensorID, pollutants,post_url);
+            });
+            $('#btnduration7d_S_sensor').click(function() {
+                $(this).addClass('active');
+                $('#btnduration1d_S_sensor').removeClass('active')
+                $('#btnduration30d_S_sensor').removeClass('active')
+                $('#btndurationAll_S_sensor').removeClass('active')
+                var pollutants = $('#hid_pollutants_S_sensor').val();
+                var duration =  'week';
+                var typology = ['All'];
+                var spaceType = ['All']; 
+                var sensorID = [$('#map_active_deviceID').val()];// ['1202240025']; 
+                $('#active_sensor').text(sensorID); 
+                $('#hid_duration_S_sensor').val('week');
+                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            });
+            $('#btnduration30d_S_sensor').click(function() {
+                $(this).addClass('active');
+                $('#btnduration1d_S_sensor').removeClass('active')
+                $('#btnduration7d_S_sensor').removeClass('active')
+                $('#btndurationAll_S_sensor').removeClass('active')
+                var pollutants = $('#hid_pollutants_S_sensor').val();
+                var duration =  'month';
+                var typology = ['All'];
+                var spaceType = ['All']; 
+                var sensorID = [$('#map_active_deviceID').val()];// ['1202240025']; 
+                $('#active_sensor').text(sensorID); 
+                $('#hid_duration_S_sensor').val('month');
+                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            });
+            $('#btndurationAll_S_sensor').click(function() {
+                $(this).addClass('active');
+                $('#btnduration1d_S_sensor').removeClass('active')
+                $('#btnduration7d_S_sensor').removeClass('active')
+                $('#btnduration30d_S_sensor').removeClass('active')
+                var pollutants = $('#hid_pollutants_S_sensor').val();
+                var duration =  'ytd';
+                var typology = ['All'];
+                var spaceType = ['All']; 
+                var sensorID = [$('#map_active_deviceID').val()];// ['1202240025']; 
+                $('#active_sensor').text(sensorID); 
+                $('#hid_duration_S_sensor').val('ytd');
+                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            });
+            //line chart for single sensor pollutant 
+            $('#btnaqi_sensor').click(function() {
+                $(this).addClass('active');
+                $('#btnpm25_sensor').removeClass('active')
+                $('#btnpm10_sensor').removeClass('active')
+                $('#btnco2_sensor').removeClass('active')
+                $('#btntvoc_sensor').removeClass('active')
+                var duration =  $('#hid_duration_S_sensor').val();;
+                var typology = ['All'];
+                var spaceType = ['All']; 
+                var sensorID =[$('#map_active_deviceID').val()];//  ['1202240025']; 
+                $('#active_sensor').text(sensorID); 
+                $('#hid_pollutants_S_sensor').val('aqi');
+                pollutants = "aqi";
+                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            });
+            $('#btnpm25_sensor').click(function() {
+                $(this).addClass('active');
+                $('#btnaqi_sensor').removeClass('active')
+                $('#btnpm10_sensor').removeClass('active')
+                $('#btnco2_sensor').removeClass('active')
+                $('#btntvoc_sensor').removeClass('active')
+                var duration =  $('#hid_duration_S_sensor').val();;
+                var typology = ['All'];
+                var spaceType = ['All']; 
+                var sensorID = [$('#map_active_deviceID').val()];// ['1202240025']; 
+                $('#active_sensor').text(sensorID); 
+                $('#hid_pollutants_S_sensor').val('pm25');
+                pollutants = "pm25";
+                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            });
+            $('#btnpm10_sensor').click(function() {
+                $(this).addClass('active');
+                $('#btnpm25_sensor').removeClass('active')
+                $('#btnaqi_sensor').removeClass('active')
+                $('#btnco2_sensor').removeClass('active')
+                $('#btntvoc_sensor').removeClass('active')
+                var duration =  $('#hid_duration_S_sensor').val();;
+                var typology = ['All'];
+                var spaceType = ['All']; 
+                var sensorID = [$('#map_active_deviceID').val()];// ['1202240025']; 
+                $('#active_sensor').text(sensorID); 
+                $('#hid_pollutants_S_sensor').val('pm10');
+                pollutants = "pm10";
+                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            });
+            $('#btnco2_sensor').click(function() {
+                $(this).addClass('active');
+                $('#btnpm25_sensor').removeClass('active')
+                $('#btnpm10_sensor').removeClass('active')
+                $('#btnaqi_sensor').removeClass('active')
+                $('#btntvoc_sensor').removeClass('active')
+                var duration =  $('#hid_duration_S_sensor').val();;
+                var typology = ['All'];
+                var spaceType = ['All']; 
+                var sensorID = [$('#map_active_deviceID').val()];// ['1202240025']; 
+                $('#active_sensor').text(sensorID); 
+                $('#hid_pollutants_S_sensor').val('co2');
+                pollutants = "co2";
+                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            });
+            $('#btntvoc_sensor').click(function() {
+                $(this).addClass('active');
+                $('#btnpm25_sensor').removeClass('active')
+                $('#btnpm10_sensor').removeClass('active')
+                $('#btnco2_sensor').removeClass('active')
+                $('#btnaqi_sensor').removeClass('active')
+                var duration =  $('#hid_duration_S_sensor').val();;
+                var typology = ['All'];
+                var spaceType = ['All']; 
+                var sensorID = [$('#map_active_deviceID').val()];// ['1202240025']; 
+                $('#active_sensor').text(sensorID); 
+                $('#hid_pollutants_S_sensor').val('voc');
+                pollutants = "voc";
+                getLinechart1(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            });
+
+            $('#btnback2map').click(function() {
+                device_count = $('#map_total_device_count').val();
+                $('#monitor_count').text(device_count + " monitors");
+                $('#map_active_deviceID').val("none");
+                $('#btn_active_sensor').addClass('hide_element');
+                $('#single_sensor_row').addClass('hide_element');
+                document.getElementById('map_row').scrollIntoView();
             });
         });
     </script>
@@ -575,7 +746,8 @@
             var spaceType = ['All']; //$('#spaceType_boxplot').val();
             var sensorID = ['All']; //$('#sensorID_boxplot').val();
             var pollutants = 'aqi';
-            getBoxplot(duration, typology,  spaceType, sensorID, pollutants, post_url, 'boxchart1');
+            var indoorCondition = $('#hid_indoorConditon_R_boxplot').val();
+            getBoxplot(duration, typology, spaceType, sensorID, pollutants, indoorCondition, post_url, 'boxchart1');
             $('#btnduration1d_R_boxplot').click(function() {
                 $(this).addClass('active');
                 $('#btnduration7d_R_boxplot').removeClass('active')
@@ -587,7 +759,8 @@
                 var spaceType = ['All']; 
                 var sensorID = ['All']; 
                 $('#hid_duration_R_boxplot').val('24hour');
-                getBoxplot(duration, typology, spaceType, sensorID, pollutants,post_url, 'boxchart1');
+                var indoorCondition = $('#hid_indoorConditon_R_boxplot').val();
+                getBoxplot(duration, typology, spaceType, sensorID, pollutants, indoorCondition, post_url, 'boxchart1');
             });
             $('#btnduration7d_R_boxplot').click(function() {
                 $(this).addClass('active');
@@ -600,7 +773,8 @@
                 var spaceType = ['All']; 
                 var sensorID = ['All']; 
                 $('#hid_duration_R_boxplot').val('week');
-                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url, 'boxchart1');
+                var indoorCondition = $('#hid_indoorConditon_R_boxplot').val();
+                getBoxplot(duration, typology, spaceType, sensorID, pollutants, indoorCondition, post_url, 'boxchart1');
             });
             $('#btnduration30d_R_boxplot').click(function() {
                 $(this).addClass('active');
@@ -613,7 +787,8 @@
                 var spaceType = ['All']; 
                 var sensorID = ['All']; 
                 $('#hid_duration_R_boxplot').val('month');
-                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url, 'boxchart1');
+                var indoorCondition = $('#hid_indoorConditon_R_boxplot').val();
+                getBoxplot(duration, typology, spaceType, sensorID, pollutants, indoorCondition, post_url, 'boxchart1');
             });
             $('#btndurationAll_R_boxplot').click(function() {
                 $(this).addClass('active');
@@ -626,7 +801,8 @@
                 var spaceType = ['All']; 
                 var sensorID = ['All']; 
                 $('#hid_duration_R_boxplot').val('ytd');
-                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url, 'boxchart1');
+                var indoorCondition = $('#hid_indoorConditon_R_boxplot').val();
+                getBoxplot(duration, typology, spaceType, sensorID, pollutants, indoorCondition, post_url, 'boxchart1');
             });
             //Residential pollutants button click
             $('#btnaqi_R_box').click(function() {
@@ -641,7 +817,8 @@
                 var sensorID = ['All']; 
                 pollutants = 'aqi';
                 $('#hid_pollutants_R_boxplot').val('aqi');
-                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url, 'boxchart1');
+                var indoorCondition = $('#hid_indoorConditon_R_boxplot').val();
+                getBoxplot(duration, typology, spaceType, sensorID, pollutants, indoorCondition, post_url, 'boxchart1');
             });
             $('#btnpm25_R_box').click(function() {
                 $(this).addClass('active');
@@ -655,7 +832,8 @@
                 var sensorID = ['All']; 
                 pollutants = 'pm25';
                 $('#hid_pollutants_R_boxplot').val('pm25');
-                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url, 'boxchart1');
+                var indoorCondition = $('#hid_indoorConditon_R_boxplot').val();
+                getBoxplot(duration, typology, spaceType, sensorID, pollutants, indoorCondition, post_url, 'boxchart1');
             });
             $('#btnpm10_R_box').click(function() {
                 $(this).addClass('active');
@@ -669,7 +847,8 @@
                 var sensorID = ['All']; 
                 pollutants = 'pm10';
                 $('#hid_pollutants_R_boxplot').val('pm10');
-                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url, 'boxchart1');
+                var indoorCondition = $('#hid_indoorConditon_R_boxplot').val();
+                getBoxplot(duration, typology, spaceType, sensorID, pollutants, indoorCondition, post_url, 'boxchart1');
             });
             $('#btnco2_R_box').click(function() {
                 $(this).addClass('active');
@@ -683,7 +862,8 @@
                 pollutants = 'co2';
                 var sensorID = ['All']; 
                 $('#hid_pollutants_R_boxplot').val('co2');
-                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url, 'boxchart1');
+                var indoorCondition = $('#hid_indoorConditon_R_boxplot').val();
+                getBoxplot(duration, typology, spaceType, sensorID, pollutants, indoorCondition, post_url, 'boxchart1');
             });
             $('#btntvoc_R_box').click(function() {
                 $(this).addClass('active');
@@ -697,7 +877,44 @@
                 var sensorID = ['All']; 
                 pollutants = 'voc';
                 $('#hid_pollutants_R_boxplot').val('voc');
-                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url, 'boxchart1');
+                var indoorCondition = $('#hid_indoorConditon_R_boxplot').val();
+                getBoxplot(duration, typology, spaceType, sensorID, pollutants, indoorCondition, post_url, 'boxchart1');
+            });
+            //Residential Indoor condition button event
+            $('#btnWTemp_R_box').click(function() {
+                //$(this).addClass('active');
+                //$('#btnWRH_R_box').removeClass('active')
+                $('#hid_indoorConditon_R_boxplot').val('none');
+                $(this).toggleClass("active");
+                if ($(this).hasClass("active")){
+                    $('#hid_indoorConditon_R_boxplot').val('temp');
+                    $('#btnWRH_R_box').removeClass('active')
+                }
+                var duration = $('#hid_duration_R_boxplot').val();
+                var typology = ['Residential'];
+                var spaceType = ['All']; 
+                var sensorID = ['All']; 
+                pollutants = $('#hid_pollutants_R_boxplot').val();
+                var indoorCondition = $('#hid_indoorConditon_R_boxplot').val();
+                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, indoorCondition, post_url, 'boxchart1');
+
+            });
+            $('#btnWRH_R_box').click(function() {
+                //$(this).addClass('active');
+                //$('#btnWTemp_R_box').removeClass('active')
+                $('#hid_indoorConditon_R_boxplot').val('none');
+                $(this).toggleClass("active");
+                if ($(this).hasClass("active")){
+                    $('#hid_indoorConditon_R_boxplot').val('RH');
+                    $('#btnWTemp_R_box').removeClass('active')
+                }
+                var duration = $('#hid_duration_R_boxplot').val();
+                var typology = ['Residential'];
+                var spaceType = ['All']; 
+                var sensorID = ['All']; 
+                pollutants = $('#hid_pollutants_R_boxplot').val();
+                var indoorCondition = $('#hid_indoorConditon_R_boxplot').val();
+                getBoxplot(duration, typology,  spaceType, sensorID,pollutants,indoorCondition, post_url, 'boxchart1');
             });
         });
     </script>
@@ -708,73 +925,183 @@
         
         $(document).ready(function() {
             var post_url = '<?php echo $_SESSION['config']->server_host?>/chartData/boxplot.php';
-            var duration = $('#hid_duration_boxplot_office').val();
+            var duration = $('#hid_duration_O_boxplot').val();
             var typology = ['Office']; //$('#typology_boxplot').val();
             var spaceType = ['All']; //$('#spaceType_boxplot').val();
             var sensorID = ['All']; //$('#sensorID_boxplot').val();
-            var pollutants = 'pm25';
-            
-            getBoxplot(duration, typology,  spaceType, sensorID, pollutants, post_url, 'boxchart1_office');
-            $('#btnduration1_boxplot').click(function() {
+            var pollutants = 'aqi';
+            var indoorCondition = $('#hid_indoorConditon_O_boxplot').val();      
+            getBoxplot(duration, typology,  spaceType, sensorID, pollutants,indoorCondition, post_url, 'boxchart1_office');
+            $('#btnduration1d_O_boxplot').click(function() {
+                $(this).addClass('active');
+                $('#btnduration7d_O_boxplot').removeClass('active')
+                $('#btnduration30d_O_boxplot').removeClass('active')
+                $('#btndurationAll_O_boxplot').removeClass('active')
+                var pollutants = $('#hid_pollutants_O_boxplot').val();
                 var duration = '24hour'; 
-                var typology = $('#typology_boxplot').val();
-                var spaceType = $('#spaceType_boxplot').val();
-                var sensorID = $('#sensorID_boxplot').val();
-                $('#hid_duration_boxplot').val('24hour');
-                getBoxplot(duration, typology, spaceType, sensorID, pollutants,post_url);
+                var typology = ['Office'];
+                var spaceType = ['All']; 
+                var sensorID = ['All']; 
+                $('#hid_duration_O_boxplot').val('24hour');
+                var indoorCondition = $('#hid_indoorConditon_O_boxplot').val();      
+                getBoxplot(duration, typology,  spaceType, sensorID, pollutants,indoorCondition, post_url, 'boxchart1_office');
             });
-            $('#btnduration2_boxplot').click(function() {
+            $('#btnduration7d_O_boxplot').click(function() {
+                $(this).addClass('active');
+                $('#btnduration1d_O_boxplot').removeClass('active')
+                $('#btnduration30d_O_boxplot').removeClass('active')
+                $('#btndurationAll_O_boxplot').removeClass('active')
+                var pollutants = $('#hid_pollutants_O_boxplot').val();
                 var duration = 'week';  
-                var typology = $('#typology_boxplot').val();
-                var spaceType = $('#spaceType_boxplot').val();
-                var sensorID = $('#sensorID_boxplot').val();
-                $('#hid_duration_boxplot').val('week');
-                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url);
+                var typology =['Office'];
+                var spaceType = ['All']; 
+                var sensorID = ['All']; 
+                $('#hid_duration_O_boxplot').val('week');
+                var indoorCondition = $('#hid_indoorConditon_O_boxplot').val();      
+                getBoxplot(duration, typology,  spaceType, sensorID, pollutants,indoorCondition, post_url, 'boxchart1_office');
             });
-            $('#btnduration3_boxplot').click(function() {
+            $('#btnduration30d_O_boxplot').click(function() {
+                $(this).addClass('active');
+                $('#btnduration1d_O_boxplot').removeClass('active')
+                $('#btnduration7d_O_boxplot').removeClass('active')
+                $('#btndurationAll_O_boxplot').removeClass('active')
+                var pollutants = $('#hid_pollutants_O_boxplot').val();
                 var duration = 'month'; 
-                var typology = $('#typology_boxplot').val();
-                var spaceType = $('#spaceType_boxplot').val();
-                var sensorID = $('#sensorID_boxplot').val();
-                $('#hid_duration_boxplot').val('month');
-                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url);
+                var typology = ['Office'];
+                var spaceType = ['All']; 
+                var sensorID = ['All']; 
+                $('#hid_duration_O_boxplot').val('month');
+                var indoorCondition = $('#hid_indoorConditon_O_boxplot').val();      
+                getBoxplot(duration, typology,  spaceType, sensorID, pollutants,indoorCondition, post_url, 'boxchart1_office');
             });
-            $('#btnduration4_boxplot').click(function() {
+            $('#btndurationAll_O_boxplot').click(function() {
+                $(this).addClass('active');
+                $('#btnduration1d_O_boxplot').removeClass('active')
+                $('#btnduration7d_O_boxplot').removeClass('active')
+                $('#btnduration30d_O_boxplot').removeClass('active')
+                var pollutants = $('#hid_pollutants_O_boxplot').val();
                 var duration = 'ytd';  
-                var typology = $('#typology_boxplot').val();
-                var spaceType = $('#spaceType_boxplot').val();
-                var sensorID = $('#sensorID_boxplot').val();
-                $('#hid_duration_boxplot').val('ytd');
-                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url);
+                var typology = ['Office'];
+                var spaceType = ['All']; 
+                var sensorID = ['All']; 
+                $('#hid_duration_O_boxplot').val('ytd');
+                var indoorCondition = $('#hid_indoorConditon_O_boxplot').val();      
+                getBoxplot(duration, typology,  spaceType, sensorID, pollutants,indoorCondition, post_url, 'boxchart1_office');
+
             });
-            $('#typology_boxplot').on('change', function() {
-                var duration = $('#hid_duration_boxplot').val();
-                var typology = $('#typology_boxplot').val();
-                var spaceType = $('#spaceType_boxplot').val();
-                var sensorID = $('#sensorID_boxplot').val();
-                getBoxplot(duration, typology, spaceType, sensorID,pollutants, post_url);
+            //Office pollutants button click
+            $('#btnaqi_O_box').click(function() {
+                $(this).addClass('active');
+                $('#btnpm25_O_box').removeClass('active')
+                $('#btnpm10_O_box').removeClass('active')
+                $('#btnco2_O_box').removeClass('active')
+                $('#btntvoc_O_box').removeClass('active')
+                var duration = $('#hid_duration_O_boxplot').val();
+                var typology = ['Office'];
+                var spaceType = ['All']; 
+                var sensorID = ['All']; 
+                pollutants = 'aqi';
+                $('#hid_pollutants_O_boxplot').val('aqi');
+                var indoorCondition = $('#hid_indoorConditon_O_boxplot').val();      
+                getBoxplot(duration, typology,  spaceType, sensorID, pollutants,indoorCondition, post_url, 'boxchart1_office');
             });
-            $('#spaceType_boxplot').on('change', function() {
-                var duration = $('#hid_duration_boxplot').val();
-                var typology = $('#typology_boxplot').val();
-                var spaceType = $('#spaceType_boxplot').val();
-                var sensorID = $('#sensorID_boxplot').val();
-                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            $('#btnpm25_O_box').click(function() {
+                $(this).addClass('active');
+                $('#btnaqi_O_box').removeClass('active')
+                $('#btnpm10_O_box').removeClass('active')
+                $('#btnco2_O_box').removeClass('active')
+                $('#btntvoc_O_box').removeClass('active')
+                var duration = $('#hid_duration_O_boxplot').val();
+                var typology = ['Office'];
+                var spaceType = ['All']; 
+                var sensorID = ['All']; 
+                pollutants = 'pm25';
+                $('#hid_pollutants_O_boxplot').val('pm25');
+                var indoorCondition = $('#hid_indoorConditon_O_boxplot').val();      
+                getBoxplot(duration, typology,  spaceType, sensorID, pollutants,indoorCondition, post_url, 'boxchart1_office');
             });
-            $('#sensorID_boxplot').on('change', function() {
-                var duration = $('#hid_duration_boxplot').val();
-                var typology = $('#typology_boxplot').val();
-                var spaceType = $('#spaceType_boxplot').val();
-                var sensorID = $('#sensorID_boxplot').val();
-                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            $('#btnpm10_O_box').click(function() {
+                $(this).addClass('active');
+                $('#btnaqi_O_box').removeClass('active')
+                $('#btnpm25_O_box').removeClass('active')
+                $('#btnco2_O_box').removeClass('active')
+                $('#btntvoc_O_box').removeClass('active')
+                var duration = $('#hid_duration_O_boxplot').val();
+                var typology = ['Office'];
+                var spaceType = ['All']; 
+                var sensorID = ['All']; 
+                pollutants = 'pm10';
+                $('#hid_pollutants_O_boxplot').val('pm10');
+                var indoorCondition = $('#hid_indoorConditon_O_boxplot').val();      
+                getBoxplot(duration, typology,  spaceType, sensorID, pollutants,indoorCondition, post_url, 'boxchart1_office');
             });
-            $('input[name=box_radio_pullutant]').change(function(){
-                var duration = $('#hid_duration_boxplot').val();
-                var typology = $('#typology_boxplot').val();
-                var spaceType = $('#spaceType_boxplot').val();
-                var sensorID = $('#sensorID_boxplot').val();
-                pollutants = $('#box_radio_pullutant:checked').val();
-                getBoxplot(duration, typology,  spaceType, sensorID,pollutants, post_url);
+            $('#btnco2_O_box').click(function() {
+                $(this).addClass('active');
+                $('#btnaqi_O_box').removeClass('active')
+                $('#btnpm25_O_box').removeClass('active')
+                $('#btnpm10_O_box').removeClass('active')
+                $('#btntvoc_O_box').removeClass('active')
+                var duration = $('#hid_duration_O_boxplot').val();
+                var typology = ['Office'];
+                var spaceType = ['All']; 
+                pollutants = 'co2';
+                var sensorID = ['All']; 
+                $('#hid_pollutants_O_boxplot').val('co2');
+                var indoorCondition = $('#hid_indoorConditon_O_boxplot').val();      
+                getBoxplot(duration, typology,  spaceType, sensorID, pollutants,indoorCondition, post_url, 'boxchart1_office');
+            });
+            $('#btntvoc_O_box').click(function() {
+                $(this).addClass('active');
+                $('#btnaqi_O_box').removeClass('active')
+                $('#btnpm25_O_box').removeClass('active')
+                $('#btnpm10_O_box').removeClass('active')
+                $('#btnco2_O_box').removeClass('active')
+                var duration = $('#hid_duration_O_boxplot').val();
+                var typology = ['Office'];
+                var spaceType = ['All']; 
+                var sensorID = ['All']; 
+                pollutants = 'voc';
+                $('#hid_pollutants_O_boxplot').val('voc');
+                var indoorCondition = $('#hid_indoorConditon_O_boxplot').val();      
+                getBoxplot(duration, typology,  spaceType, sensorID, pollutants,indoorCondition, post_url, 'boxchart1_office');
+
+            });
+
+            //Residential Indoor condition button event
+            $('#btnWTemp_O_box').click(function() {
+                //$(this).addClass('active');
+                //$('#btnWRH_R_box').removeClass('active')
+                $('#hid_indoorConditon_O_boxplot').val('none');
+                $(this).toggleClass("active");
+                if ($(this).hasClass("active")){
+                    $('#hid_indoorConditon_O_boxplot').val('temp');
+                    $('#btnWRH_O_box').removeClass('active')
+                }
+                var duration = $('#hid_duration_O_boxplot').val();
+                var typology = ['Residential'];
+                var spaceType = ['All']; 
+                var sensorID = ['All']; 
+                pollutants = $('#hid_pollutants_O_boxplot').val();
+                var indoorCondition = $('#hid_indoorConditon_O_boxplot').val();
+                getBoxplot(duration, typology,  spaceType, sensorID, pollutants,indoorCondition, post_url, 'boxchart1_office');
+
+            });
+            $('#btnWRH_O_box').click(function() {
+                //$(this).addClass('active');
+                //$('#btnWTemp_R_box').removeClass('active')
+                $('#hid_indoorConditon_O_boxplot').val('none');
+                $(this).toggleClass("active");
+                if ($(this).hasClass("active")){
+                    $('#hid_indoorConditon_O_boxplot').val('RH');
+                    $('#btnWTemp_O_box').removeClass('active')
+                }
+                var duration = $('#hid_duration_O_boxplot').val();
+                var typology = ['Residential'];
+                var spaceType = ['All']; 
+                var sensorID = ['All']; 
+                pollutants = $('#hid_pollutants_O_boxplot').val();
+                var indoorCondition = $('#hid_indoorConditon_O_boxplot').val();
+                getBoxplot(duration, typology,  spaceType, sensorID, pollutants,indoorCondition, post_url, 'boxchart1_office');
 
             });
         });

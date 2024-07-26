@@ -1,5 +1,5 @@
 function getBoxplot(duration, typology, spaceType, sensorID, pollutants, post_url){
-    console.log("function called " + duration + typology + spaceType +  sensorID + pollutants);
+    console.log("function called lol" + duration + typology + spaceType +  sensorID + pollutants);
     $.ajax({
         url: post_url, // URL of the PHP file
         type: 'POST', // Use POST method
@@ -161,6 +161,15 @@ function updateBoxChart(chart_data, pollutants){
             noRisers: true
           })
         );
+              // color changes
+                        series.columns.template.adapter.add("fill", function(fill, target) {
+                          var dataItem = target.dataItem;
+                          if (dataItem.valueY > dataItem.median) {
+                              return am5.color("#FF0000"); // Above median color (red for example)
+                          } else {
+                              return am5.color("#0000FF"); // Below or equal median color (blue for example)
+                          }
+                      });
         
         // Add cursor
         // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
