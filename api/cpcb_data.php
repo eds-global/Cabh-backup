@@ -4,7 +4,7 @@
     function get(){
         $condition = array();
         if(file_get_contents('php://input')){
-            $json = file_get_contents('php://input'); //'["geeks", "for", "geeks"]';
+            $json = file_get_contents('php://input');
             $data = json_decode($json,true);
             $orderBy = $data["orderBy"];
             $start_limit = $data["start_row"];
